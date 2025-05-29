@@ -10,6 +10,12 @@ const pool = new Pool({
       },
   });
 
+  function convertToISO(dateStr) {
+    // From "29.05.2025" to "2025-05-29"
+    const [day, month, year] = dateStr.split(".");
+    return `${year}-${month}-${day}`;
+  }
+
 
   export async function fetchProgramsFromDB() {
       const query = 'SELECT * FROM programypomiarowe';
@@ -26,6 +32,7 @@ const pool = new Pool({
     
     // Insert or update a program
     export async function saveProgramInDB(programname, programcode, date, time) {
+      
       const query = `
         INSERT INTO programypomiarowe (programname, programcode, date, time)
         VALUES ($1, $2, $3, $4)
@@ -35,7 +42,7 @@ const pool = new Pool({
           time = EXCLUDED.time
         RETURNING programid;
       `;
-      const result = await pool.query(query, [programname, programcode, date, time]);
+      const result = await pool.query(query, [programname, programcode, convertToISO(date), time]);
       return result.rows[0].programid;
     }
     
@@ -46,7 +53,7 @@ const pool = new Pool({
         VALUES ($1, $2, $3, $4);
        
       `;
-      await pool.query(query, [programid, pomiar, date, time]);
+      await pool.query(query, [programid, pomiar, convertToISO(date), time]);
     }
     
     // Fetch joined data for one report
