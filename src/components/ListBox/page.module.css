@@ -1,0 +1,13 @@
+.listboxcontainer {
+    width: 80%;
+    padding: 12px 12px;
+    border: 1px solid #ffffff;
+    border-radius: 10px;
+    background-color: #ffffff3f;
+    color: #000000c5;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    
+}
+

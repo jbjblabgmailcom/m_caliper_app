@@ -1,0 +1,101 @@
+.selectedButton {
+    padding: 12px 24px;
+    border: 2px solid #333;
+    border-radius: 10px;
+    background-color: #0097fc;
+    color: #333;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+
+
+  .valinput {
+
+    padding: 10px 10px;
+    border: 2px solid #333;
+    border-radius: 10px;
+    background-color: #0000003f;
+    color: #000000;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    width: 100px;
+  }
+  
+  .valinput:hover {
+    background: #333;
+    color: white;
+  }
+
+  .valueDynamicForm {
+    display: flex;
+    gap: 10;
+    flex-direction: row;
+
+  }
+
+  .gridDisplayDiv {
+    padding-top: 40px;
+    display: grid;
+    grid-template-columns: 100px 130px 130px 130px 70px 70px;
+    gap: 10px;
+  }
+
+
+
+  .displayInputNotOK {
+    background-color: rgb(255, 123, 123);
+    height: 60px;
+    font-size: 150%;
+    text-align: center; /* Centers text */
+    border-radius: 10px;
+    border: solid 2px black;
+    margin: 5px;
+    color: black;
+    padding: 10px; /* Ensures text isn't too close to borders */
+    width: 100%; /* Adjust width as needed */
+    outline: none; /* Removes default focus outline (optional) */
+    transition: transform 0.3s ease;
+}
+
+
+
+.displayInputOK {
+  background-color: rgb(150, 255, 155);
+  height: 60px;
+  font-size: 150%;
+  text-align: center; /* Centers text */
+  border-radius: 10px;
+  border: solid 2px black;
+  margin: 5px;
+  color: black;
+  padding: 10px; /* Ensures text isn't too close to borders */
+  width: 100%; /* Adjust width as needed */
+  outline: none; /* Removes default focus outline (optional) */
+  transition: transform 0.3s ease;
+}
+
+
+.displayInputBlank {
+  background-color: rgb(255, 255, 255);
+  height: 60px;
+  font-size: 150%;
+  text-align: center; /* Centers text */
+  border-radius: 10px;
+  border: solid 2px black;
+  margin: 5px;
+  color: black;
+  padding: 10px; /* Ensures text isn't too close to borders */
+  width: 100%; /* Adjust width as needed */
+  outline: none; /* Removes default focus outline (optional) */
+  transition: transform 0.3s ease;
+}
+
+.displayInputOK:focus,
+.displayInputBlank:focus,
+.displayInputNotOK:focus {
+  transform: scale(1.5);
+}

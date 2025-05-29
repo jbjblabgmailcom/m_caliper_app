@@ -1,0 +1,28 @@
+.wrappercontainer {
+  display: grid;
+  
+
+}
+
+
+.topside {
+  display:flex;
+  flex-direction:row;
+  align-items:center;
+  width: 100%;
+  height: 200px;
+  gap:30px;
+  padding-left:30px;
+
+}
+
+.content {
+  background-color: rgb(255, 255, 255);
+  padding: 20px;
+}
+
+@media print {
+  .topside {
+    display: none !important;
+  }
+}

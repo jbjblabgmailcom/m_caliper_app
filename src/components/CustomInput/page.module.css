@@ -1,0 +1,20 @@
+.custominput {
+
+    padding: 12px 24px;
+    padding-right: 40px; /* Add space on the right side for the icon */
+    border: 2px solid #333;
+    border-radius: 5px;
+    background-color: #ffffff3f;
+    color: #000000;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    width: 85%;
+  }
+  
+  .custominput:hover {
+    background: #0097fc;
+    color: rgb(0, 0, 0);
+  }
+

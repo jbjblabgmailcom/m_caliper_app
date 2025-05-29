@@ -1,0 +1,83 @@
+.searchcontainer {
+  width: 70%;
+}
+
+.searchinput {
+
+  padding: 12px 24px;
+  padding-right: 40px; /* Add space on the right side for the icon */
+  border: 2px solid #333;
+  border-radius: 5px;
+  background-color: #0000003f;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+  width: 100%;
+}
+
+.searchinput:hover {
+  background: #333;
+  color: white;
+}
+
+
+
+.ulcontainer {
+  padding-top: 10px;
+  padding-left: 30px;
+}
+
+.ul {
+  display: grid;
+  gap: 10px;
+
+}
+
+.li {
+  display: grid;
+
+  grid-template-columns: 5fr 1fr 1fr;
+  align-items:center; /* Align items vertically in the center */
+  
+  border: 2px solid;
+  border-color: #000000;
+  border-radius: 5px;
+  padding: 5px;
+  padding-left: 50px;
+  
+  background-color: #00000031;
+}
+
+
+
+
+
+
+.li img { /* Style the image within the li */
+  overflow: visible; /* Hide any overflow from the animation */
+  transition: transform 0.3s ease; /* Add a smooth transition */
+  object-fit: cover; /* Maintain aspect ratio while covering the container */
+}
+
+.li img:hover {
+  transform: scale(1.5); /* Scale up the li element on hover */
+}
+
+.extraDiv {
+  overflow: visible;
+  transition: 
+    transform 0.3s ease,
+    color 0.3s ease,
+    font-size 0.3s ease; /* Or use 'all 0.3s ease' to cover all animatable properties */
+  object-fit: cover;
+  font-size: 16px; /* base size */
+  color: black;     /* base color */
+}
+
+.extraDiv:hover {
+  color: #616161;
+  font-size: 20px; /* new size on hover */
+  transform: scale(1.05); /* optional: subtle scaling */
+}

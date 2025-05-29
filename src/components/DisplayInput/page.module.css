@@ -1,0 +1,13 @@
+.displayInput {
+    background-color: rgb(255, 255, 255);
+    height: 60px;
+    font-size: 150%;
+    text-align: center; /* Centers text */
+    border-radius: 10px;
+    border: solid 2px black;
+    margin: 5px;
+    color: black;
+    padding: 10px; /* Ensures text isn't too close to borders */
+    width: 100%; /* Adjust width as needed */
+    outline: none; /* Removes default focus outline (optional) */
+}
