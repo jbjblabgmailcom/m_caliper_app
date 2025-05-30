@@ -76,5 +76,6 @@ const pool = new Pool({
         JOIN programypomiarowe ON pomiary.programid = programypomiarowe.programid
       `;
       const result = await pool.query(query);
+      
       return result.rows;
     }
