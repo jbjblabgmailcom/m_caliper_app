@@ -86,7 +86,7 @@ export default function PlayProgram({progId, progName, progCode, progDate, progT
         console.log(Object.keys(pomiarCode).length);
         console.log(pomiarCode);
         if(liczbaLinii === Object.keys(pomiarCode).length) {
-            const saveResult = await savePomiar(progId, JSON.stringify(pomiarCode), pomiarDate, pomiarTime);
+            const saveResult = await savePomiar(progName, JSON.stringify(pomiarCode), pomiarDate, pomiarTime);
             setdbResult(saveResult);    
         } else {
             setdbResult({"error": "Błędne dane w formularzu. Wartość musi być liczbą."});

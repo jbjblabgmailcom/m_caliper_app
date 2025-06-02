@@ -35,10 +35,10 @@ export async function saveProgram(programid, programname, programcode, date, tim
 }
 
 
-export async function savePomiar(pomiarid, programid, pomiar, date, time) {
+export async function savePomiar(progName, pomiar, date, time) {
     
     try {
-        await savePomiarInDB(pomiarid, programid, pomiar, date, time);
+        await savePomiarInDB(progName, pomiar, date, time);
         return {"success": true};
     } catch (error) {
         console.log('Pomiar saving error' + error);

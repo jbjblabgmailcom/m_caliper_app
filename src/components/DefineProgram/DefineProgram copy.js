@@ -40,7 +40,7 @@ export default function DefineProgram({progId, progName, progCode, progDate, pro
  
     },[]);
     
-    const handleRemove = (index) => {
+    const handleRemove = async (index) => {
         setHiddenIndexes([...hiddenIndexes, index]);
         
 
@@ -206,7 +206,10 @@ export default function DefineProgram({progId, progName, progCode, progDate, pro
                         id={'balon' + index} 
                         name={'balon' + index}
                         className={classes.valinput}
-                        defaultValue={liczbaLinii}
+                        defaultValue={
+                            document.getElementById('balon' + (index - 1)) !== undefined ?
+                             "1" : Number(document.getElementById('balon' + (index - 1))?.value || 0) + 1
+                          }
                     />
                     </div>
                     

@@ -47,21 +47,20 @@ const pool = new Pool({
     }
     
     // Insert or update a pomiar
-    export async function savePomiarInDB(programid, pomiar, date, time) {
+    export async function savePomiarInDB(progName, pomiar, date, time) {
       const query = `
-        INSERT INTO pomiary (programid, pomiar, date, time)
+        INSERT INTO pomiary (programname, pomiar, date, time)
         VALUES ($1, $2, $3, $4);
        
       `;
-      await pool.query(query, [programid, pomiar, convertToISO(date), time]);
+      await pool.query(query, [progName, pomiar, convertToISO(date), time]);
     }
     
     // Fetch joined data for one report
     export async function fetchDaneRaportuFromDB(id) {
       const query = `
-        SELECT pomiary.*, programypomiarowe.programname
+        SELECT pomiarid, pomiar, date, time, programname
         FROM pomiary
-        JOIN programypomiarowe ON pomiary.programid = programypomiarowe.programid
         WHERE pomiary.pomiarid = $1
       `;
       const result = await pool.query(query, [id]);
@@ -71,9 +70,9 @@ const pool = new Pool({
     // Fetch all report summaries
     export async function fetchAllReportsFromDB() {
       const query = `
-        SELECT pomiary.pomiarid, pomiary.date, pomiary.time, programypomiarowe.programname
+        SELECT pomiarid, date, time, programname
         FROM pomiary
-        JOIN programypomiarowe ON pomiary.programid = programypomiarowe.programid
+        
       `;
       const result = await pool.query(query);
       
