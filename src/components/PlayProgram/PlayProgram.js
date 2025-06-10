@@ -82,9 +82,7 @@ export default function PlayProgram({progId, progName, progCode, progDate, progT
            }
             
         }
-        console.log(liczbaLinii);
-        console.log(Object.keys(pomiarCode).length);
-        console.log(pomiarCode);
+        
         if(liczbaLinii === Object.keys(pomiarCode).length) {
             const saveResult = await savePomiar(progName, JSON.stringify(pomiarCode), pomiarDate, pomiarTime);
             setdbResult(saveResult);    

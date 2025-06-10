@@ -1,7 +1,8 @@
-'use server';
 
 import { fetchAllReports } from '@/db/db_server_side';
 import ReportList from '@/components/ReportList/ReportList';
+
+export const dynamic = 'force-dynamic';
 
 export default async function RaportyPage () {
 
@@ -9,9 +10,6 @@ export default async function RaportyPage () {
     
 
 
-    return (
-       
-        <ReportList list={allReports} />
+    return <ReportList list={allReports} />;
         
-    )
 }

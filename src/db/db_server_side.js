@@ -3,22 +3,29 @@
 import { fetchProgramsFromDB, fetchDaneProgramuFromDB, saveProgramInDB, savePomiarInDB, fetchDaneRaportuFromDB, fetchAllReportsFromDB } from './db_actions.js'
 
 export async function fetchProgramsList() {
-    let programsList = await fetchProgramsFromDB();
-    //console.log(programsList);
-    return programsList;
+    try {
+        const programsList = await fetchProgramsFromDB();
+        return programsList;
+    } catch (error) {
+        console.error('Fetching program list failed', error);
+        throw error;
+    }
+    
+    
 }
 
 
 export async function fetchDaneProgramu(id) {
-    let daneprogramu;
+    
     try {
-        daneprogramu = await fetchDaneProgramuFromDB(id);
+        const daneprogramu = await fetchDaneProgramuFromDB(id);
+        return daneprogramu;
         } catch (error) {
-        console.log(error);
+        console.error('Fetching program data error', error);
+        throw error;
     }
-    
-    
-    return daneprogramu;
+ 
+   
 }
 
 export async function saveProgram(programid, programname, programcode, date, time) {
@@ -27,8 +34,8 @@ export async function saveProgram(programid, programname, programcode, date, tim
         await saveProgramInDB(programid, programname, programcode, date, time);
         return {"success": true};
     } catch (error) {
-        console.log('Program saving error' + error);
-        return {"error": error}
+        console.error('Program saving error', error);
+        throw error;
     }
 
     
@@ -41,8 +48,8 @@ export async function savePomiar(progName, pomiar, date, time) {
         await savePomiarInDB(progName, pomiar, date, time);
         return {"success": true};
     } catch (error) {
-        console.log('Pomiar saving error' + error);
-        return {"error": error}
+        console.error('Measurement saving error', error);
+        throw error;
     }
 
     
@@ -50,12 +57,13 @@ export async function savePomiar(progName, pomiar, date, time) {
 
 
 export async function fetchDaneRaportu(id) {
-    let daneraportu;
+    
     try {
-        daneraportu = await fetchDaneRaportuFromDB(id);
-        
+        const daneraportu = await fetchDaneRaportuFromDB(id);
+        return daneraportu;
         } catch (error) {
-        console.log(error);
+        console.error("Error fetching report data ", error);
+        throw error;
     }
     
     
@@ -63,14 +71,16 @@ export async function fetchDaneRaportu(id) {
 }
 
 export async function fetchAllReports() {
-    let allReports;
+    
     try {
-        allReports = await fetchAllReportsFromDB();
+       const allReports = await fetchAllReportsFromDB();
+       return allReports;
 
     } catch (error) {
-        console.log(error);
+        console.error("Error fetching reports ", error);
+        throw error;
     }
 
-    return allReports;
+    
 
 }

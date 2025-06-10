@@ -31,8 +31,10 @@ const pool = new Pool({
     }
     
     // Insert or update a program
+
     export async function saveProgramInDB(programname, programcode, date, time) {
-      
+
+            
       const query = `
         INSERT INTO programypomiarowe (programname, programcode, date, time)
         VALUES ($1, $2, $3, $4)
