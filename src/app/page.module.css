@@ -1,26 +1,57 @@
 .wrappercontainer {
   display: grid;
+  /* Ensures it takes full available width */
+  width: 100%;
+  min-height: 100vh; /* Make sure it takes at least the full viewport height */
+}
+
+.topside {
+  display: flex; /* Makes direct children (image div and button container) flex items */
   
+  align-items: center; /* Vertically aligns items in the cross-axis (center in this case) */
+  gap: 20px; /* Adds space between the image div and the button container */
+  padding: 1rem;
 
 }
 
-
-.topside {
-  display:flex;
-  flex-direction:row;
-  align-items:center;
-  width: 100%;
-  height: 200px;
-  gap:30px;
-  padding-left:30px;
-
+.buttonContainer {
+  display: flex;
+  flex-direction: row; /* Stacks the buttons vertically */
+  gap: 10px; /* Adds space between the stacked buttons */
+  /* Adjust alignment within the column if needed, e.g., align-items: flex-start; */
 }
 
 .content {
-  background-color: rgb(255, 255, 255);
-  padding: 20px;
+  background-color: var(--background); /* Use theme variable */
+  padding: 1.5rem; /* Responsive padding */
+  flex-grow: 1; /* Allows content to take up remaining space in a flex/grid parent */
 }
 
+/* Media query for smaller screens (e.g., mobile) */
+@media (max-width: 414px) {
+  .topside {
+    flex-direction: row; /* Stack image and button container vertically on very small screens */
+    align-items:center; /* Align to the left when stacked */
+    padding: 1rem;
+    gap: 1rem; /* Adjust gap for stacked items */
+    width: 200%;
+  }
+
+  .buttonContainer {
+    flex-direction: column; /* Stack buttons vertically on small screens */
+    width: 100%; /* Make buttons fill available width */
+    align-items:stretch; /* Make buttons fill available width */
+
+  }
+
+  
+  .logo {
+    width: 100px;
+    height: 100px;
+  }
+}
+
+/* Print media query - unchanged as it's already specific */
 @media print {
   .topside {
     display: none !important;

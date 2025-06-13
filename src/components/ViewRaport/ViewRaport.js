@@ -16,23 +16,33 @@ export default function ViewRaport({pomiarId, progId, progName, pomiarCode, pomi
         <div className="printable">     
         <div className={classes.reportcontainer}>
         <h2>Raport pomiarowy</h2>
-        
+      
         <div className={classes.reportheader}>
             <p><strong>Raport ID:</strong> {pomiarId}</p>
             <p><strong>Nazwa detalu (programu):</strong> {progName}</p>
             <p><strong>Data pomiaru:</strong> {pomiarDate}</p>
             <p><strong>Czas pomiaru:</strong> {pomiarTime}</p>
         </div>
-        <table>
+        
+        <table className={classes.reportTable}>
+              <colgroup>
+                    <col />
+                    <col />
+                    <col />
+                    <col />
+                    <col />
+                    <col />
+                    <col />
+                </colgroup>
             <thead>
                 <tr>
-                    <th>Balon</th>
+                    <th>Bal</th>
                     <th>Cecha</th>
-                    <th>Nominał</th>
-                    <th>Rzeczywisty</th>
-                    <th>Odchyłka</th>
-                    <th>Górna tol.</th>
-                    <th>Dolna tol.</th>
+                    <th>Nom</th>
+                    <th>Rzecz</th>
+                    <th>Odch</th>
+                    <th>↑ tol</th>
+                    <th>↓ tol</th>
                 </tr>
             </thead>
             <tbody>
@@ -69,6 +79,7 @@ export default function ViewRaport({pomiarId, progId, progName, pomiarCode, pomi
 
             </tbody>
         </table>
+        
     </div>
         </div> 
                

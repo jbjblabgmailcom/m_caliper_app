@@ -1,63 +1,106 @@
 .defineProgramWrapper {
   display: grid;
-  grid-template-rows: 1fr 1fr auto 1fr 1fr;
+  grid-template-rows: repeat(2, auto) 1fr repeat(2, auto); /* Flexible rows */
   align-items: center;
-  background-color: #fcfcfc;
+  background-color: #ffffff;
   border: solid 1px;
-  border-radius: 5px;;
-  width:100%;
-  box-shadow: 0 0 5px rgb(0, 0, 0);
-  
+  border-radius: 0.3125rem; /* 5px = 0.3125rem */
+  width: clamp(350px, 100vw, 750px); /* Responsive width: min 300px, fluid 95vw, max 800px */
+
 }
 
-.defineProgramWrapper > div {
+@media (max-width: 414px) {
+  .defineProgramWrapper {
+    margin: 0.1rem auto;
+    border: 0px;
+  }
+}
 
-  padding: 10px;
+
+
+.defineProgramWrapper > div {
+  padding: 0.1rem;
   width: 100%;
 }
 
-
+/* Responsive styles for selectedButton */
 .selectedButton {
-    padding: 12px 24px;
-    border: 2px solid #000000;
-    border-radius: 5px;
-    background-color: #0097fc;
-    color: #000000;
-    font-size: 16px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s;
+  padding: 0.75rem 0.75rem; /* Responsive padding */
+  border: 2px solid #000000;
+  border-radius: 0.3125rem; /* 5px = 0.3125rem */
+  background-color: #0097fc;
+  color: #000000;
+  font-size: 1rem; /* Responsive font size */
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+  /* Optional: Make button width responsive for small screens */
+  width: 29%; /* Default to auto */
+  /* Ensure minimum width */
+  text-align: center;
+  height:3rem;
+}
+
+
+@media (max-width: 414px) {
+  .selectedButton {
+    padding: 0.3rem 1rem;
+    font-size: 1rem;
+    width: 30%; /* Full width on very small screens */
   }
+}
 
+/* Responsive styles for valinput */
+.valinput {
+  padding: 0.325rem 0.325rem; /* 10px = 0.625rem */
+  border: 2px solid #333;
+  border-radius: 0.3125rem; /* 5px = 0.3125rem */
+  background-color: #fce565;
+  color: #000000;
+  font-size: 1rem; /* Responsive font size */
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+  width: clamp(30px, 15vw, 100px); /* Responsive width: min 80px, fluid 15vw, max 150px */
+}
 
-  .valinput {
+.valinput:hover {
+  background: #ff9d5c;
+  color: rgb(0, 0, 0);
+}
 
-    padding: 10px 10px;
-    border: 2px solid #333;
-    border-radius: 5px;
-    background-color: #fce565;
-    color: #000000;
-    font-size: 16px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s;
-    width: 100px;
-  }
-  
-  .valinput:hover {
-    background: #ff9d5c;
-    color: rgb(0, 0, 0);
-  }
+/* Responsive styles for valueDynamicForm */
+.valueDynamicForm {
+  display: flex;
+  gap: 0.325rem; /* 10px = 0.625rem */
+  flex-direction: row; /* Default row direction */
+  flex-wrap: wrap; /* Allow items to wrap to the next line */
+  justify-content: flex-start; /* Align items to the start */
+  align-items: center; /* Vertically center items */
+}
 
+@media (max-width: 414px) {
   .valueDynamicForm {
-    display: flex;
-    gap: 10;
-    flex-direction: row;
-
+    flex-direction: column; /* Stack items vertically on smaller screens */
+    align-items: flex-start; /* Align stacked items to the start */
+    gap: 0.2rem; /* Smaller gap when stacked */
   }
+}
 
+/* Responsive styles for gridDisplayDiv */
+.gridDisplayDiv {
+  display: grid;
+  width: 95vw;
+  grid-template-columns: repeat(5, 1fr) 0.3fr;
+  gap: 0.2rem;
+}
+
+
+
+@media (max-width: 414px) {
   .gridDisplayDiv {
-    display: grid;
-    grid-template-columns: repeat(6, 100px);
-    gap: 10px;
+    grid-template-columns: repeat(5, 1fr) 0.3fr;
+    gap: 0.5rem;
+    width: 90%;
   }
+}

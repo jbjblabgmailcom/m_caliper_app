@@ -50,9 +50,10 @@ export default function DefineProgram({progId, progName, progCode, progDate, pro
     
     const handleRemove = (index) => {
     setCodeState(prev => {
+        console.log('prev', prev);
         
         const objectSize = Object.keys(codeState).length;
-        if(objectSize>1) {
+        if(objectSize>0) {
                     const reindexed = Object.values(prev).filter((_, i) => i !== index).reduce((acc, item, i) => {
             acc[i] = item;
             return acc;
@@ -60,12 +61,13 @@ export default function DefineProgram({progId, progName, progCode, progDate, pro
           return reindexed;
         } else {
             return prev;
-        }
+       }
 
         });
+       
     };
 
-
+ 
 
     const handleSave = async () => {
     
@@ -189,7 +191,9 @@ const handleOnChange = (index, name, value) => {
                 <div><label>Dolna tol. </label></div>
                 <div><label>Usuń. </label></div>
 
-            {Object.entries(codeState).map(([], index) => {
+            {
+               
+                    Object.entries(codeState).map(([_, value], index) => {
 
             
                 
@@ -200,7 +204,7 @@ const handleOnChange = (index, name, value) => {
                         id={'balon' + index} 
                         name={'balon' + index}
                         className={classes.valinput}
-                        defaultValue={codeState[index]?.balon || 0}
+                        value={codeState[index]?.balon || 0}
                         onChange={(event) => handleOnChange(index, 'balon', event.target.value)}
                     />
                     </div>
@@ -220,8 +224,9 @@ const handleOnChange = (index, name, value) => {
                         id={'nominal' + index} 
                         name={'nominal' + index}
                         className={classes.valinput}
-                        defaultValue={codeState[index]?.nominal || unset}
+                        value={codeState[index]?.nominal || unset}
                         onChange={(event) => handleOnChange(index, 'nominal', event.target.value)}
+                        autoComplete="off"
                     />
                     </div>
                     
@@ -257,7 +262,10 @@ const handleOnChange = (index, name, value) => {
                 
                 
             );
-            })}
+            })
+          
+            }
+
             </div> 
             <div><ProgramButton onClick={addNewLine}>Dodaj nowy element</ProgramButton></div>
 

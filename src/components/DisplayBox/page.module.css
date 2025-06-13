@@ -1,13 +1,35 @@
 .displayBox {
-    display: flex;
-    background-color: rgb(199, 199, 199);
-    height: 60px;
-    font-size: 150%;
-    justify-content: center;
-    align-items: center;
-    border-radius: 10px;
-    border: solid 2px rgb(87, 87, 87);
-    margin: 5px;
-    color:rgb(46, 46, 46);
+  
+  display: flex;
+  background-color: rgb(199, 199, 199);
+  /* Use min-height and fluid height to be responsive */
+  min-height: 3rem; /* 48px, a sensible minimum */
+  height: clamp(3rem, 5vh, 4rem); /* Scales between 48px and 64px, or 5% of viewport height */
+  /* Responsive font size */
+  font-size: clamp(1.25rem, 1.2rem + 0.5vw, 1.875rem); /* Scales from 20px to 30px */
+  justify-content: center;
+  align-items: center;
+  
+  border: solid 0.125rem rgb(87, 87, 87); /* 2px = 0.125rem */
+  margin: 0.2rem; /* 5px = 0.3125rem */
+  color: rgb(46, 46, 46);
 }
+ 
 
+@media (max-width: 414px) {
+  .displayBox {
+  min-height: 2.5rem; /* 48px, a sensible minimum */
+  height: clamp(2rem, 4vh, 3rem); /* Scales between 48px and 64px, or 5% of viewport height */
+  /* Responsive font size */
+  font-size: clamp(1rem, 1rem + 0.5vw, 1.875rem); /* Scales from 20px to 30px */
+  text-align: center; /* Centers text */
+  
+  border: solid 1px rgba(0, 0, 0, 0.144); /* 2px = 0.125rem */
+  
+  color: black;
+  padding: 0rem; /* 10px = 0.625rem; Ensures text isn't too close to borders */
+  margin: auto;
+  outline: none; /* Removes default focus outline (optional) */
+  transition: transform 0.3s ease; /* Keep the transition for a smooth effect */
+}
+}

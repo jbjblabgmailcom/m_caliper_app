@@ -1,13 +1,20 @@
 .listboxcontainer {
-    width: 80%;
-    padding: 12px 12px;
-    border: 1px solid #ffffff;
-    border-radius: 10px;
+    width: clamp(200px, 80vw, 400px); /* Responsive width: min 200px, fluid 80vw, max 400px */
+    padding: 0.75rem; /* 12px = 0.75rem */
+    border: 0.0625rem solid #ffffff; /* 1px = 0.0625rem */
+    border-radius: 0.625rem; /* 10px = 0.625rem */
     background-color: #ffffff3f;
     color: #000000c5;
-    font-size: 16px;
+    font-size: 1rem; /* Responsive font size */
     font-weight: 600;
     cursor: pointer;
-    
+  /* Center the listbox and add some margin */
 }
 
+/* Optional: Further adjustments for very small screens if needed for listboxcontainer */
+@media (max-width: 414px) {
+  .listboxcontainer {
+    padding: 0.6rem; /* Slightly less padding on very small screens */
+    font-size: 1rem; /* Slightly smaller font on very small screens */
+  }
+}

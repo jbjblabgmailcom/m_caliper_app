@@ -1,83 +1,177 @@
 .searchcontainer {
-  width: 70%;
+  width: clamp(300px, 90vw, 700px); /* Responsive width: min 300px, fluid 90vw, max 700px (original 70%) */
+  margin: 0 auto 1.25rem auto; /* Center with bottom margin */
+  padding: 0.5rem; /* Add some padding */
 }
 
+/* Responsive styles for .searchinput */
 .searchinput {
-
-  padding: 12px 24px;
-  padding-right: 40px; /* Add space on the right side for the icon */
-  border: 2px solid #333;
-  border-radius: 5px;
-  background-color: #0000003f;
-  color: #ffffff;
-  font-size: 16px;
+  padding: 0.75rem 1.5rem; /* 12px 24px = 0.75rem 1.5rem */
+  padding-right: 2.5rem; /* 40px = 2.5rem; Add space on the right side for the icon */
+  border: 0.125rem solid #333; /* 2px = 0.125rem */
+  border-radius: 0.3125rem; /* 5px = 0.3125rem */
+  background-color: #0000003f; /* Original background #ffffff, changed to #0000003f */
+  color: #ffffff; /* Original color #000000, changed to #ffffff */
+  font-size: 1rem; /* 16px = 1rem */
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s;
-  width: 100%;
+  width: 100%; /* Already responsive */
+  margin-bottom: 1.25rem; /* 20px = 1.25rem */
 }
 
 .searchinput:hover {
   background: #333;
+  color: rgb(255, 255, 255);
+}
+
+/* Responsive styles for .rowhover */
+.rowhover {
+  transition: ease-in-out 0.5s;
+}
+
+.rowhover:hover {
+  background: #bfdeff;
+  color: rgb(0, 0, 0);
+}
+
+/* Responsive styles for .reportcontainer */
+.reportcontainer {
+  max-width: clamp(320px, 95vw, 800px); /* Responsive max-width */
+  margin: auto; /* Centers the container */
+  background: white;
+  padding: 1.25rem; /* 20px = 1.25rem */
+  border-radius: 0.5rem; /* 8px = 0.5rem */
+  box-shadow: 0 0 0.625rem rgba(0, 0, 0, 0.1); /* 10px = 0.625rem */
+}
+
+/* Responsive styles for .reportcontainer h2 */
+.reportcontainer h2 {
+  text-align: center;
+  margin-bottom: 1.25rem; /* 20px = 1.25rem */
+  font-size: clamp(1.25rem, 1.2rem + 0.5vw, 1.875rem); /* Responsive font size */
+}
+
+/* Responsive styles for .reportheader */
+.reportheader {
+  margin-bottom: 1.25rem; /* 20px = 1.25rem */
+  padding: 0.625rem; /* 10px = 0.625rem */
+  background: #007bff;
+  color: white;
+  border-radius: 0.3125rem; /* 5px = 0.3125rem */
+}
+
+/* Responsive styles for .reportcontainer table */
+.reportcontainer table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 0.625rem; /* 10px = 0.625rem */
+}
+
+/* Responsive styles for .reportcontainer th, .reportcontainer td */
+.reportcontainer th,
+.reportcontainer td {
+  border: 0.0625rem solid #ddd; /* 1px = 0.0625rem */
+  padding: 0.5rem; /* 8px = 0.5rem */
+  text-align: center;
+  font-size: clamp(0.875rem, 0.8rem + 0.2vw, 1rem); /* Responsive font size */
+}
+
+/* Styles for .reportcontainer th (colors are fine) */
+.reportcontainer th {
+  background: #007bff;
   color: white;
 }
 
-
-
-.ulcontainer {
-  padding-top: 10px;
-  padding-left: 30px;
+/* Styles for .greenCell (colors are fine) */
+.greenCell {
+  background-color: #64c48c;
 }
 
+/* Styles for .redCell (colors are fine) */
+.redCell {
+  background-color: #f16d6d;
+}
+
+/* Print media query - unchanged */
+@media print {
+  .printable {
+    display: block !important;
+  }
+}
+
+/* Responsive styles for .ulcontainer */
+.ulcontainer {
+  padding-top: 0.325rem; /* 10px = 0.625rem */
+ 
+  width: 100%; /* Ensure it takes full width */
+}
+
+/* Responsive styles for .ul */
 .ul {
   display: grid;
-  gap: 10px;
-
+  gap: 0.325rem; /* 10px = 0.625rem */
+  padding-left: 1rem;
 }
 
+/* Responsive styles for .li */
 .li {
-  display: grid;
-
-  grid-template-columns: 5fr 1fr 1fr;
-  align-items:center; /* Align items vertically in the center */
   
-  border: 2px solid;
-  border-color: #000000;
-  border-radius: 5px;
-  padding: 5px;
-  padding-left: 50px;
+  display: grid;
+  /* Responsive grid columns:
+     - Default to 3 columns, with the first being the largest (5fr)
+     - Use minmax to allow columns to shrink/grow based on content and available space
+  */
+  grid-template-columns: minmax(100px, 4fr) minmax(50px, 1fr) minmax(50px, 1fr);
+  align-items: center; /* Align items vertically in the center */
+  border: 0.09rem solid #000000; /* 2px = 0.125rem */
+  border-radius: 0.3125rem; /* 5px = 0.3125rem */
+  padding-left: 1.5rem;
   
   background-color: #00000031;
 }
 
+@media (max-width: 414px) {
+ .li {
+  text-align: justify;
+ }
+  
+  
+}
 
-
-
-
-
-.li img { /* Style the image within the li */
+/* Responsive styles for .li img */
+.li img {
   overflow: visible; /* Hide any overflow from the animation */
   transition: transform 0.3s ease; /* Add a smooth transition */
   object-fit: cover; /* Maintain aspect ratio while covering the container */
+  max-width: 100%; /* Ensure image doesn't overflow its grid cell */
+  height: auto; /* Maintain aspect ratio */
 }
 
 .li img:hover {
-  transform: scale(1.5); /* Scale up the li element on hover */
+  transform: scale(1.5); /* Scale up the image on hover */
 }
 
+/* Responsive styles for .extraDiv */
 .extraDiv {
   overflow: visible;
-  transition: 
+  transition:
     transform 0.3s ease,
     color 0.3s ease,
     font-size 0.3s ease; /* Or use 'all 0.3s ease' to cover all animatable properties */
   object-fit: cover;
-  font-size: 16px; /* base size */
+  font-size: clamp(0.875rem, 0.8rem + 0.2vw, 1rem); /* Scales from 14px to 16px */
   color: black;     /* base color */
 }
 
 .extraDiv:hover {
   color: #616161;
-  font-size: 20px; /* new size on hover */
+  font-size: clamp(1rem, 0.95rem + 0.2vw, 1.25rem); /* new size on hover (16px to 20px) */
   transform: scale(1.05); /* optional: subtle scaling */
+}
+
+@media (max-width: 414px) {
+  .extraDiv {
+    text-align: center; /* Center text when li is stacked */
+  }
 }

@@ -1,53 +1,113 @@
 .reportcontainer {
-  margin-top: 50px;
-  max-width: 800px;
-  margin-left:auto;
-  margin-right:auto;
+  margin-top: 3.125rem; /* 50px = 3.125rem */
+  max-width: clamp(300px, 100vw, 800px); /* Responsive max-width */
+  margin-left:auto; /* Ensures horizontal centering */
+  margin-right:auto; /* Ensures horizontal centering */
   background: white;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-.reportcontainer h2 {
-  text-align: center;
+  
+  border-radius: 0.5rem; /* 8px = 0.5rem */
+  
 }
 
+
+
+/* Responsive styles for .reportcontainer h2 */
+.reportcontainer h2 {
+  text-align: center;
+  margin-bottom: 1.25rem; /* 20px = 1.25rem */
+  font-size: clamp(1.25rem, 1.2rem + 0.5vw, 1.875rem); /* Responsive font size */
+}
+
+/* Responsive styles for .reportheader */
 .reportheader {
-  margin-bottom: 20px;
-  padding: 10px;
+
+  padding: 0.4rem; /* 10px = 0.625rem */
+  background: #d6eaff;
+  color: rgb(0, 0, 0);
+
+  
+  
+}
+
+
+.reportTable {
+  border-collapse: collapse;
+  margin:auto;
+  width: clamp(300px, 90vw, 800px); /* Responsive max-width */
+}
+
+.reportTable col:nth-child(1) { width: 10%; }
+.reportTable col:nth-child(2) { width: 12.5%; }
+.reportTable col:nth-child(3) { width: 20% }
+.reportTable col:nth-child(4) { width: 20% }
+.reportTable col:nth-child(5) { width: 10%; }
+.reportTable col:nth-child(6) { width: 5%; }
+.reportTable col:nth-child(7) { width: 5%; }
+
+/* Responsive styles for .reportcontainer th, .reportcontainer td */
+.reportcontainer th,
+.reportcontainer td {
+  border: 1px solid #ddd; /* 1px = 0.0625rem */
+  padding: 0rem; /* 8px = 0.5rem */
+  text-align: center;
+  font-size: clamp(0.5rem, 0.8rem + 0.2vw, 1rem); /* Responsive font size */
+}
+
+@media (max-width: 414px) {
+  .reportheader {
+  
+  padding: 0rem; /* 10px = 0.625rem */
   background: #007bff;
   color: white;
-  border-radius: 5px;
+  
+  
+  }
+
+
+.reportTable col:nth-child(1) { width: 10%; }
+.reportTable col:nth-child(2) { width: 12.5%; }
+.reportTable col:nth-child(3) { width: 20% }
+.reportTable col:nth-child(4) { width: 20% }
+.reportTable col:nth-child(5) { width: 10%; }
+.reportTable col:nth-child(6) { width: 5%; }
+.reportTable col:nth-child(7) { width: 5%; }
+
+.reportcontainer th,
+.reportcontainer td {
+  
+  padding: 0rem;
+  font-size: clamp(0.5rem, 0.8rem + 0.2vw, 1rem); 
 }
-.reportcontainer table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 10px;
+
 }
-.reportcontainer th, .reportcontainer td {
-  border: 1px solid #ddd;
-  padding: 8px;
-  text-align: center;
-}
+
+
+
+/* Styles for .reportcontainer th (colors are fine) */
 .reportcontainer th {
   background: #007bff;
   color: white;
 }
+
+/* Styles for alternating row background */
 .reportcontainer tr:nth-child(even) {
   background: #f9f9f9;
 }
 
+/* Styles for .greenCell (colors are fine) */
 .greenCell {
   background-color: #64c48c;
 }
 
+/* Styles for .redCell (colors are fine) */
 .redCell {
   background-color: #f16d6d;
 }
 
-
+/* Print media query - unchanged */
 @media print {
   .printable {
     display: block !important;
   }
 }
+

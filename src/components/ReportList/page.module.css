@@ -1,30 +1,34 @@
 .wrapper {
-  display: flexbox;
-  justify-items: center;
-  margin-top: 30px;
+  display: flex; /* Corrected from flexbox to flex */
+  justify-content: center; /* Centers children horizontally */
+  align-items: center; /* Centers children vertically if wrapper has a defined height */
+  margin-top: 1.875rem; /* 30px = 1.875rem */
+  flex-direction: column; /* Default to column for better responsiveness, can be overridden */
+  width: 100%; /* Ensure it takes full width */
+  min-height: 100vh; /* Make sure it takes at least the full viewport height if acting as a main container */
 }
 
+
+/* Responsive styles for .searchcontainer */
 .searchcontainer {
-  width: 50%;
-
+  width: clamp(300px, 90vw, 700px); /* Responsive width: min 300px, fluid 90vw, max 500px */
+  
+  
 }
 
+/* Responsive styles for .searchinput */
 .searchinput {
-
-  padding: 12px 24px;
-  
-  border: 2px solid #333;
-  border-radius: 5px;
+  padding: 0.75rem 1.5rem; /* 12px 24px = 0.75rem 1.5rem */
+  border: 0.125rem solid #333; /* 2px = 0.125rem */
+  border-radius: 0.2rem; /* 5px = 0.3125rem */
   background-color: #ffffff;
   color: #000000;
-  font-size: 16px;
+  font-size: 1rem; /* 16px = 1rem */
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s;
-  width: 100%;
-  
-  margin-bottom: 20px;
-
+  width: 100%; /* Already responsive */
+  margin-bottom: 1.25rem; /* 20px = 1.25rem */
 }
 
 .searchinput:hover {
@@ -32,6 +36,7 @@
   color: rgb(255, 255, 255);
 }
 
+/* Responsive styles for .rowhover */
 .rowhover {
   transition: ease-in-out 0.5s;
 }
@@ -41,51 +46,65 @@
   color: rgb(0, 0, 0);
 }
 
-
+/* Responsive styles for .reportcontainer */
 .reportcontainer {
-  max-width: 800px;
-  margin: auto;
+  max-width: clamp(300px, 95vw, 800px); /* Responsive max-width */
+  margin: auto; /* Centers the container */
   background: white;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 1.25rem; /* 20px = 1.25rem */
+  border-radius: 0.5rem; /* 8px = 0.5rem */
+  box-shadow: 0 0 0.625rem rgba(0, 0, 0, 0.1); /* 10px = 0.625rem */
 }
+
+/* Responsive styles for .reportcontainer h2 */
 .reportcontainer h2 {
   text-align: center;
+  margin-bottom: 1.25rem; /* 20px = 1.25rem */
+  font-size: clamp(1.25rem, 1.2rem + 0.5vw, 1.875rem); /* Responsive font size */
 }
 
+/* Responsive styles for .reportheader */
 .reportheader {
-  margin-bottom: 20px;
-  padding: 10px;
+  margin-bottom: 1.25rem; /* 20px = 1.25rem */
+  padding: 0.325rem; /* 10px = 0.625rem */
   background: #007bff;
   color: white;
-  border-radius: 5px;
+  border-radius: 0.3125rem; /* 5px = 0.3125rem */
 }
+
+/* Responsive styles for .reportcontainer table */
 .reportcontainer table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 10px;
+  margin-top: 0.05rem; /* 10px = 0.625rem */
 }
-.reportcontainer th, .reportcontainer td {
-  border: 1px solid #ddd;
-  padding: 8px;
+
+/* Responsive styles for .reportcontainer th, .reportcontainer td */
+.reportcontainer th,
+.reportcontainer td {
+  border: 0.0625rem solid #ddd; /* 1px = 0.0625rem */
+  padding: 0.1rem; /* 8px = 0.5rem */
   text-align: center;
+  font-size: clamp(0.875rem, 0.8rem + 0.2vw, 1rem); /* Responsive font size */
 }
+
+/* Styles for .reportcontainer th (colors are fine) */
 .reportcontainer th {
   background: #007bff;
   color: white;
 }
 
-
+/* Styles for .greenCell (colors are fine) */
 .greenCell {
   background-color: #64c48c;
 }
 
+/* Styles for .redCell (colors are fine) */
 .redCell {
   background-color: #f16d6d;
 }
 
-
+/* Print media query - unchanged */
 @media print {
   .printable {
     display: block !important;

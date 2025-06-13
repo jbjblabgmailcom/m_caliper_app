@@ -144,7 +144,7 @@ export default function PlayProgram({progId, progName, progCode, progDate, progT
                     </p>
                     
                 </div>
-                <div>
+                <div className={classes.progNameBox}>
                         <DisplayBox displayData={progName || undefined} id="progNameInput" required />
                 </div>
               

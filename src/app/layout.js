@@ -4,7 +4,6 @@ import classes from "./page.module.css";
 import Image from 'next/image';
 import logoImg from '../../public/measurelogo.png';
 import ProgramButton from "@/components/NewProgramButton/ProgramButton.js";
-import ListBox from "@/components/ListBox/ListBox";
 import Link from 'next/link';
 import { LayoutProvider } from "@/context/LayoutContext";
 
@@ -31,10 +30,10 @@ export default function RootLayout({ children }) {
         <LayoutProvider>
               <div className={classes.topside}>
                   <div>
-                    <Image src={logoImg} width="150" alt="logo image" />
+                    <Image src={logoImg} width="150" alt="logo image" className={classes.logo} />
                     
                   </div>
-                  <div>
+                  <div className={classes.buttonContainer}>
                     <Link href="/">
                     <ProgramButton>Strona główna</ProgramButton>
                     </Link>

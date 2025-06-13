@@ -1,73 +1,84 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  /* Define a base font size for scaling */
+  font-size: 16px; /* Base for rem units */
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #ffffff;
-    --foreground: #000000;
+    --background: #ffffff; /* Changed to a darker background for dark mode */
+    --foreground: #ffffff; /* Changed to a lighter foreground for dark mode */
+  }
+  html {
+    color-scheme: dark;
   }
 }
 
 html,
 body {
   max-width: 100vw;
-  overflow-x: hidden;
+  overflow-x:visible; /* Prevents horizontal scrolling */
 }
 
 body {
-  color: var(--foreground);
+  color: #000000;
   background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Inter', Arial, Helvetica, sans-serif; /* Prefer Inter if available, otherwise Arial */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-
+  /* Responsive font size for body text */
+  font-size: clamp(1rem, 0.95rem + 0.2vw, 1.125rem); /* Scales from 16px to 18px */
+  line-height: 1.6; /* Improve readability */
+  
 }
 
-
-
+/* Universal box-sizing for consistent layouts */
 * {
-  box-sizing: border-box;
+  box-sizing:border-box;
   padding: 0;
   margin: 0;
 }
 
+/* Links inherit color and remove underline by default */
 a {
   color: inherit;
   text-decoration: none;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
+/* Base styles for containers, adjusted for responsiveness */
+.errorcontainer,
+.successcontainer {
+  padding: 0rem; /* Use rem for responsive padding */
+  margin: 0.5rem auto; /* Centers the block horizontally, adds vertical margin */
+  border: 1px solid; /* Border color will be set by specific classes */
+  border-radius: 0.5rem; /* Rounded corners */
+  font-weight: bold;
+  text-align: center;
+  max-width: 90%;
+
+}
+
+/* Specific colors for error container */
+.errorcontainer {
+  background-color: #ffe4e4; /* Light red background */
+  color: #d8000c; /* Dark red text */
+  border-color: #d8000c; /* Red border */
+}
+
+/* Specific colors for success container */
+.successcontainer {
+  background-color: #ddffdf; /* Light green background */
+  color: #247200; /* Dark green text */
+  border-color: #4fd800; /* Green border */
+}
+
+/* Media query for very small screens if specific adjustments are needed, though clamp() handles much */
+@media (max-width: 360px) {
+  .errorcontainer,
+  .successcontainer {
+    padding: 0.8rem; /* Slightly less padding on very small screens */
+    margin: 0.8rem auto;
+    max-width: 90%;
   }
 }
-
-
-.errorcontainer {
-  background-color: #ffe4e4;  /* Light red background */
-  color: #d8000c;  /* Dark red text */
-  border: 1px solid #d8000c;  /* Red border */
-  padding: 10px;
-  margin: 10px 0;
-  border-radius: 5px;  /* Rounded corners */
-  font-weight: bold;
-  text-align: center;
-  width: 50%;
-  min-width: 400px;
-}
-
-.successcontainer {
-  background-color: #ddffdf;  /* Light green background */
-  color: #247200;  /* Dark red text */
-  border: 1px solid #4fd800;  /* Red border */
-  padding: 10px;
-  margin: 10px 0;
-  border-radius: 5px;  /* Rounded corners */
-  font-weight: bold;
-  text-align: center;
-  width: 50%;
-  min-width: 400px;
-}
-

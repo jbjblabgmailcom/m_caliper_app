@@ -1,20 +1,29 @@
 .custominput {
+  padding: 0.75rem 1.5rem; /* Responsive padding using rem */
+  padding-right: 2.5rem; /* Adjusted for icon space, 40px = 2.5rem */
+  border: 2px solid #333;
+  border-radius: 0.3125rem; /* 5px = 0.3125rem */
+  background-color: #ffffff3f;
+  color: #000000;
+  font-size: 1rem; /* Base font size */
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+  /* Responsive width using clamp() for better control */
+  width: clamp(200px, 100vw, 90%); /* Min 200px, fluid 85% up to max 400px */
+}
 
-    padding: 12px 24px;
-    padding-right: 40px; /* Add space on the right side for the icon */
-    border: 2px solid #333;
-    border-radius: 5px;
-    background-color: #ffffff3f;
-    color: #000000;
-    font-size: 16px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s;
-    width: 85%;
+.custominput:hover {
+  background: #0097fc;
+  color: rgb(0, 0, 0);
+}
+
+/* Optional: Adjustments for very small screens if needed for custominput */
+@media (max-width: 414px) {
+  .custominput {
+    padding: 1rem 1rem; /* Smaller padding on small screens */
+   
+    font-size: 1.2rem; /* Slightly smaller font on very small screens */
   }
-  
-  .custominput:hover {
-    background: #0097fc;
-    color: rgb(0, 0, 0);
-  }
+}
 
