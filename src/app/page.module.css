@@ -1,5 +1,9 @@
+
+
+
 .wrappercontainer {
-  display: grid;
+  display: flexbox;
+  align-items:start;
   /* Ensures it takes full available width */
   width: 100%;
   min-height: 100vh; /* Make sure it takes at least the full viewport height */
@@ -8,8 +12,8 @@
 .topside {
   display: flex; /* Makes direct children (image div and button container) flex items */
   
-  align-items: center; /* Vertically aligns items in the cross-axis (center in this case) */
-  gap: 20px; /* Adds space between the image div and the button container */
+  align-items:center; /* Vertically aligns items in the cross-axis (center in this case) */
+  gap: 1.5rem; /* Adds space between the image div and the button container */
   padding: 1rem;
 
 }
@@ -23,8 +27,9 @@
 
 .content {
   background-color: var(--background); /* Use theme variable */
-  padding: 1.5rem; /* Responsive padding */
-  flex-grow: 1; /* Allows content to take up remaining space in a flex/grid parent */
+  padding-top: 0rem; /* Responsive padding */
+  padding-left: 2rem;
+  
 }
 
 /* Media query for smaller screens (e.g., mobile) */
@@ -57,3 +62,15 @@
     display: none !important;
   }
 }
+
+
+
+
+.loginControler {
+  position: absolute;
+  top: -1rem;
+  right: -1rem;
+  
+
+}
+

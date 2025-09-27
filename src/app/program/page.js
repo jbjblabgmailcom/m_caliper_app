@@ -8,7 +8,7 @@ export default async function ProgramDetailPage() {
 
 
     return <>
-        <h1>Zdefiniuj program pomiarowy.</h1>
+        <h1>Create new program.</h1>
         
         
 
@@ -18,6 +18,7 @@ export default async function ProgramDetailPage() {
                     progCode={'{"0":{"balon":1,"cecha":"odleglosc","nominal":0,"upper":0,"lower":0}}'}
                     progDate={currentDate.toLocaleDateString()}
                     progTime={currentDate.toLocaleTimeString()}
+                    owner_email={undefined}
                     />
 
         

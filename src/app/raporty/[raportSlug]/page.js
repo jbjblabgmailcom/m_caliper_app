@@ -5,7 +5,7 @@ import ViewRaport from '@/components/ViewRaport/ViewRaport';
 import Link from 'next/link';
 
 
-export default async function Raport({params}) {
+export default async function ReportSrv({params}) {
 
     const raportId = await params;
     const daneraportu = await fetchDaneRaportu(raportId.raportSlug);
@@ -15,8 +15,9 @@ export default async function Raport({params}) {
     return <>
         {!daneraportu && typeof daneraportu !== "object" ||  daneraportu instanceof Error ? (
             <>
-            <div className="errorcontainer">Raport o podanym numerze <h2>{raportId.raportSlug}</h2> Nie istnieje.</div>
-            <Link href={"/raporty/"}>Wróc do listy raportów</Link>
+            <div className="errorcontainer"><h2>Access denied.</h2>
+            <Link href={"/raporty/"}>Go back to report list</Link>
+           </div>
             </>
         ) : (
             <ViewRaport 
@@ -26,6 +27,7 @@ export default async function Raport({params}) {
             pomiarCode={daneraportu?.pomiar}
             pomiarDate={daneraportu?.date.toLocaleDateString()}
             pomiarTime={daneraportu?.time}
+            owner_email={daneraportu?.owner_email}
             />
         )}
         

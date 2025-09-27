@@ -1,0 +1,91 @@
+.topmenu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #fcfcfc;
+    z-index: 1000;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+    padding: 0.75rem 0;
+}
+
+.topmenuContent {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.logotextSmart {
+    color: #333;
+    font-size: 1.5rem;
+    font-weight: 700;
+    font-family: 'Poppins', sans-serif;
+}
+
+.logotextCaliper {
+    color: #007bff;
+    font-size: 1.5rem;
+    font-weight: 700;
+    font-family: 'Poppins', sans-serif;
+}
+
+.navLinks {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.link {
+    font-size: 1rem;
+    color: #666;
+    text-decoration: none;
+    transition: color 0.3s ease, transform 0.2s ease;
+}
+
+.link:hover {
+    color: #007bff;
+    transform: translateY(-2px);
+}
+
+.ctaButton {
+    background-color: #007bff;
+    color: #ffffff;
+    padding: 0.5rem 1.5rem;
+    border-radius: 50px;
+    font-weight: 600;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.ctaButton:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px);
+}
+
+@media (max-width: 768px) {
+    .topmenuContent {
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+        padding: 1rem;
+    }
+
+    .navLinks {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 0.75rem;
+    }
+
+    .ctaButton {
+        margin-top: 0.5rem;
+    }
+}

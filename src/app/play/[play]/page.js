@@ -20,13 +20,14 @@ export default async function Play({params}) {
     return <>
         {!daneprogramu && typeof daneprogramu !== "object" ||  daneprogramu instanceof Error ? (
             <>
-            <div className="errorcontainer">Ten program nie istnieje... stwórz nowy poniżej.</div>
+            <div className="errorcontainer">This program does not exist. Create new one now.</div>
             <DefineProgram 
             progId={null} 
             progName={"twoja nazwa"} 
             progCode={'{"0":{"balon":"1","nominal":"","upper":"","lower":""}}'}
             progDate={currentDate}
             progTime={currentTime}
+            owner_email={undefined}
             />
             </>
             
@@ -37,6 +38,7 @@ export default async function Play({params}) {
             progCode={daneprogramu?.programcode}
             progDate={daneprogramu?.date}
             progTime={daneprogramu?.time}
+            owner_email={daneprogramu?.owner_email}
             />
         )}
         

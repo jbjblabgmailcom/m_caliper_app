@@ -17,9 +17,19 @@ const pool = new Pool({
   }
 
 
-  export async function fetchProgramsFromDB() {
-      const query = 'SELECT * FROM programypomiarowe';
-      const result = await pool.query(query);
+  export async function fetchProgramsFromDB(owner_email, limiter) {
+      let query;
+      let params;
+
+      if(limiter) {
+        query = 'SELECT * FROM programypomiarowe WHERE owner_email = $1 LIMIT $2';
+        params = [owner_email, limiter];
+      } else {
+        query = 'SELECT * FROM programypomiarowe WHERE owner_email = $1';
+        params = [owner_email];
+      }
+      
+      const result = await pool.query(query, params);
       return result.rows;
     }
     
@@ -32,36 +42,38 @@ const pool = new Pool({
     
     // Insert or update a program
 
-    export async function saveProgramInDB(programname, programcode, date, time) {
+    export async function saveProgramInDB(programname, programcode, date, time, owner_email) {
 
             
       const query = `
-        INSERT INTO programypomiarowe (programname, programcode, date, time)
-        VALUES ($1, $2, $3, $4)
+        INSERT INTO programypomiarowe (programname, programcode, date, time, owner_email)
+        VALUES ($1, $2, $3, $4, $5)
         ON CONFLICT (programname) DO UPDATE SET
           programcode = EXCLUDED.programcode,
           date = EXCLUDED.date,
-          time = EXCLUDED.time
+          time = EXCLUDED.time,
+          owner_email = EXCLUDED.owner_email
         RETURNING programid;
       `;
-      const result = await pool.query(query, [programname, programcode, convertToISO(date), time]);
+      const result = await pool.query(query, [programname, programcode, convertToISO(date), time, owner_email]);
       return result.rows[0].programid;
     }
     
     // Insert or update a pomiar
-    export async function savePomiarInDB(progName, pomiar, date, time) {
+    export async function savePomiarInDB(progName, pomiar, date, time, owner_email) {
       const query = `
-        INSERT INTO pomiary (programname, pomiar, date, time)
-        VALUES ($1, $2, $3, $4);
-       
+        INSERT INTO pomiary (programname, pomiar, date, time, owner_email)
+        VALUES ($1, $2, $3, $4, $5)
+        RETURNING pomiarid
       `;
-      await pool.query(query, [progName, pomiar, convertToISO(date), time]);
+      const result = await pool.query(query, [progName, pomiar, convertToISO(date), time, owner_email]);
+      return result.rows[0].pomiarid;
     }
     
     // Fetch joined data for one report
     export async function fetchDaneRaportuFromDB(id) {
       const query = `
-        SELECT pomiarid, pomiar, date, time, programname
+        SELECT pomiarid, pomiar, date, time, programname, owner_email
         FROM pomiary
         WHERE pomiary.pomiarid = $1
       `;
@@ -70,13 +82,23 @@ const pool = new Pool({
     }
     
     // Fetch all report summaries
-    export async function fetchAllReportsFromDB() {
+    export async function fetchAllReportsFromDB(owner_email) {
       const query = `
         SELECT pomiarid, date, time, programname
-        FROM pomiary
-        
+        FROM pomiary WHERE owner_email = $1
       `;
-      const result = await pool.query(query);
+      const result = await pool.query(query, [owner_email]);
       
       return result.rows;
+    }
+
+
+     export async function fetchUserDataFromDB(owner_email) {
+      const query = `
+        SELECT *
+        FROM users WHERE email = $1
+      `;
+      const result = await pool.query(query, [owner_email]);
+      
+      return result.rows[0];
     }

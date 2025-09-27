@@ -6,47 +6,112 @@ import classes from './page.module.css';
 import { savePomiar } from '@/db/db_server_side';
 import DisplayBox from '../DisplayBox/DisplayBox';
 import DisplayInput from '../DisplayInput/DisplayInput';
+import { useRouter } from 'next/navigation';
+import { useSession } from 'next-auth/react';
  
 
-export default function PlayProgram({progId, progName, progCode, progDate, progTime}) {
+export default function PlayProgram({progId, progName, progCode, progDate, progTime, owner_email}) {
 
-
+    const { data: session } = useSession();
     const [liczbaLinii, setLiczbaLinii] = useState(1);
     const [dynamicClassName, setDynamicClassName] = useState([]);
+    const [codeState, setCodeState] = useState(JSON.parse(progCode));
     const [rzeczyInput, setRzeczyInput] = useState([]);
-
+    const prevRef = useRef([]);
+    const [cBox, setcBox] = useState(false);
     const [dbResult, setdbResult] = useState({});
-    const code = JSON.parse(progCode);
+    const [multiplier, setMultiplier] = useState('2');
     const unset = 0;
     const debounceTimeout = useRef(null);
     const progDate2 = progDate.toLocaleDateString();
+    const router = useRouter();
+    const inputRefs = useRef([]); // store all refs here
+    const tempInputRef = useRef(null);
+
+    
+                
+    
+                //useEffect block
+
+                useEffect(()=> {
+                if(cBox) {
+                    const tempInput = tempInputRef;
+                    tempInput.current.focus();
+                    
+                }
+                },[cBox]);
+    
+                useEffect(()=> {
+                    
+                    const codeLen = Object.keys(codeState).length;
+                    setLiczbaLinii(codeLen);
+                    
+                },[progCode, codeState]);
+
+
+                useEffect(()=> {
+                    
+                    setDynamicClassName(Array.from({ length: liczbaLinii }, () => ({ key: classes.displayInputBlank })));
+                    setRzeczyInput(Array.from({ length: liczbaLinii }, () => ({ key: "" }))); 
+                    
+                },[liczbaLinii]);
+
+
+               useEffect(() => {
+                const prev = prevRef.current;
+                rzeczyInput.forEach((item, idx) => {
+                //const prevItem = prev[idx];
+                const currentInput = inputRefs.current[idx];
+                if(currentInput) {
+                    currentInput.value = rzeczyInput[idx].key;
+                }
+                
+
+                });
+
+                prevRef.current = rzeczyInput; // update reference
+                }, [rzeczyInput]);
+
+
+    
+    function handleCheckboxChange(event) {
+        setcBox(event.target.checked);
+        }
 
     
 
-    
-    useEffect(()=> {
-        
-        const codeLen = Object.keys(code).length;
-        setLiczbaLinii(codeLen);
-        
-    },[progCode]);
 
+    function findIndex(value) {
+        const entries = Object.entries(codeState); 
 
-    useEffect(()=> {
-        
-        setDynamicClassName(Array.from({ length: liczbaLinii }, () => ({ key: classes.displayInputBlank })));
-        
-    },[liczbaLinii]);
+            for (let i = 0; i < entries.length; i++) {
+                    const [key, item] = entries[i];
+                    const nominal = parseFloat(item.nominal);
+                    const upper = parseFloat(item.upper);
+                    const lower = parseFloat(item.lower);
 
-    useEffect(()=> {
-        
-        setRzeczyInput(Array.from({ length: liczbaLinii }, () => ({ key: "" }))); 
-        
-    },[liczbaLinii]);
-    
+                    let conditionMet = false;
 
+                    if (item.cecha === 'poz') {
+                        conditionMet = value >= lower && value <= nominal + (upper * Number(multiplier));
+                    } else {
+                        conditionMet = value >= nominal + (lower * Number(multiplier)) && value <= nominal + (upper * Number(multiplier));
+                    }
 
-    
+                
+                    if (conditionMet) {
+                        const rzeczyElement = inputRefs.current[i];
+                    
+                        if (rzeczyElement && rzeczyElement.value === '') {
+                            return i; 
+                        }
+                    
+                    }
+                }
+
+            return -1;
+        }
+        
     const handleSave = async () => {
 
         const pomiarCode = {};
@@ -55,15 +120,15 @@ export default function PlayProgram({progId, progName, progCode, progDate, progT
         
 
         for (let i = 0; i <= liczbaLinii-1; i++) {
-            const balon = code[i]?.balon;
-            const cecha = code[i]?.cecha;
-            const nominal = code[i]?.nominal;
+            const balon = codeState[i]?.balon;
+            const cecha = codeState[i]?.cecha;
+            const nominal = codeState[i]?.nominal;
 
-            const rzeczywistyElement = document.getElementById('rzeczy' + i);
-            const rzeczPomiar = rzeczywistyElement.value;
+            const rzeczywistyElement = inputRefs.current[i];
+            const rzeczPomiar = rzeczywistyElement.value.replace(",", ".");;
 
-            const upper = code[i]?.upper;
-            const lower = code[i]?.lower;
+            const upper = codeState[i]?.upper;
+            const lower = codeState[i]?.lower;
 
             
 
@@ -74,7 +139,7 @@ export default function PlayProgram({progId, progName, progCode, progDate, progT
                     "balon" : balon,
                     "cecha" : cecha,
                     "nominal" :  nominal,
-                    "rzeczPomiar" : rzeczPomiar,
+                    "rzeczPomiar" : String(Number(rzeczPomiar).toFixed(3)),
                     "upper" : upper,
                     "lower" : lower,
     
@@ -84,85 +149,188 @@ export default function PlayProgram({progId, progName, progCode, progDate, progT
         }
         
         if(liczbaLinii === Object.keys(pomiarCode).length) {
-            const saveResult = await savePomiar(progName, JSON.stringify(pomiarCode), pomiarDate, pomiarTime);
+            const saveResult = await savePomiar(progName, JSON.stringify(pomiarCode), pomiarDate, pomiarTime, session.user.email);
             setdbResult(saveResult);    
         } else {
-            setdbResult({"error": "Błędne dane w formularzu. Wartość musi być liczbą."});
+            setdbResult({"error": "Incorrect data in the form. The value must be a number.."});
         }
+
+    } //endof handleSave
+
+function handleRzeczyChange(val, index) {
         
+      if(cBox) {
+        clearTimeout(debounceTimeout.current);
+        debounceTimeout.current = setTimeout(()=>{
+            let rzeczy = Number(val.replace(",", "."));
+            const tempInput = tempInputRef;
+            const newIndex = findIndex(rzeczy);
+            if(newIndex === -1) {
+                tempInput.current.value = "";
+                    tempInput.current.focus();
+            } else {
+            
+            setRzeczyInput(prevState => 
+                prevState.map((rzeczyInput, i) =>
+                    i === newIndex ? { ...rzeczyInput, key: rzeczy} : rzeczyInput
+                              )
+            );
+            const {nominal, upper, lower, cecha} = codeState[newIndex] || {};
+            const nom = Number(nominal);
+            const upp = Number(upper);
+            const low = Number(lower);
+            let newClass;
+
+                if (rzeczy === "") {
+                    newClass = classes.displayInputBlank;
+                } else if (cecha === "poz") {
+                    newClass = (rzeczy >= low && rzeczy <= upp) ? classes.displayInputOK : classes.displayInputNotOK;
+                } else {
+                    newClass = (rzeczy >= nom + low && rzeczy <= nom + upp) ? classes.displayInputOK : classes.displayInputNotOK;
+                }
+
+                setDynamicClassName(prevState =>
+                    prevState.map((item, i) =>
+                        i === newIndex ? { ...item, key: newClass } : item
+                    )
+                );
+                    tempInput.current.value = "";
+                    tempInput.current.focus();
+      
+            }
+            
+
+
+        }, 1000);
+    }
+        if(!cBox) {
+            clearTimeout(debounceTimeout.current);
+            debounceTimeout.current = setTimeout(()=>{
+                let rzeczy = "";
+                if(val !== "") {
+                    rzeczy = Number(val.replace(",", "."));      
+                }
+                
+                setRzeczyInput(prev =>
+                    prev.map((item, i) =>
+                        i === index ? { ...item, key: rzeczy } : item
+                    )
+                    );
+            
+            const {nominal, upper, lower, cecha} = codeState[index] || {};
+            const nom = Number(nominal);
+            const upp = Number(upper);
+            const low = Number(lower);
+            
+     
+                let newClass;
+
+                if (rzeczy === "") {
+                    newClass = classes.displayInputBlank;
+                } else if (cecha === "poz") {
+                    newClass = (rzeczy >= low && rzeczy <= upp) ? classes.displayInputOK : classes.displayInputNotOK;
+                } else {
+                    newClass = (rzeczy >= nom + low && rzeczy <= nom + upp) ? classes.displayInputOK : classes.displayInputNotOK;
+                }
+
+                setDynamicClassName(prevState =>
+                    prevState.map((item, i) =>
+                        i === index ? { ...item, key: newClass } : item
+                    )
+                );
+                const currentInput = inputRefs.current[index];
+                
+                const nextInput = inputRefs.current[index +1];
+
+                if (currentInput?.value === "") {
+                    currentInput.focus();
+                } else if (currentInput?.value !== "" && nextInput) {
+                    nextInput.focus();
+                }
+                
+            },1000);
+      
+        }
 
     }
+  
 
-     function handleRzeczyChange(e, index) {
-            setRzeczyInput(prevState => prevState.map((rzeczyInput, i) => i === index ? { ...rzeczyInput, key: e.target.value.replace(",", ".")} : rzeczyInput));
 
-            clearTimeout(debounceTimeout.current);
-            debounceTimeout.current = setTimeout(() => {
-            const rzeczy = e.target.value.replace(",", ".");
-            const nom = Number(code[index]?.nominal);
-            const upp = Number(code[index]?.upper);
-            const low = Number(code[index]?.lower);
-            const cecha = code[index]?.cecha;
-     
-            if(rzeczy === "") {
-                setDynamicClassName(prevState => prevState.map((dynamicClassName, i) => i === index ? { ...dynamicClassName, key: classes.displayInputBlank } : dynamicClassName));
-            } else if(cecha === "poz") {
-                if(rzeczy >= low && rzeczy <= upp) {
-                    setDynamicClassName(prevState => prevState.map((dynamicClassName, i) => i === index ? { ...dynamicClassName, key: classes.displayInputOK } : dynamicClassName));
-                } else {
-                    setDynamicClassName(prevState => prevState.map((dynamicClassName, i) => i === index ? { ...dynamicClassName, key: classes.displayInputNotOK } : dynamicClassName));
-                }    
-            } else if (rzeczy >= nom + low && rzeczy <= nom + upp) {
-                    setDynamicClassName(prevState => prevState.map((dynamicClassName, i) => i === index ? { ...dynamicClassName, key: classes.displayInputOK } : dynamicClassName));
-                    } else {
-                    setDynamicClassName(prevState => prevState.map((dynamicClassName, i) => i === index ? { ...dynamicClassName, key: classes.displayInputNotOK } : dynamicClassName));
-            }
-        if(document.getElementById('rzeczy' + (index+1)) !== null) {
-            document.getElementById('rzeczy' + (index+1)).focus();
-        } else {
-            document.getElementById('rzeczy' + (index)).focus();
-        }
-        
-        }, 1000); 
-   
-        
+    const handleChangeMultiplier = (event) => {
+          setMultiplier(event.target.value);
+ 
     };
 
 
 
+
     return (
-        <div>
+        <>
+        {owner_email === session.user.email ? 
+            (
+              <>
+              <div>
                 <div>
                     <p>
-                       Data utworzenia: {progDate2}, Czas: {progTime}, Program id: {progId}
+                       Created date: {progDate2}, Time: {progTime}
                     </p>
                     
                 </div>
-                <div>
-                    <p>
-                        Nazwa programu:
-                    </p>
-                    
-                </div>
+                
                 <div className={classes.progNameBox}>
-                        <DisplayBox displayData={progName || undefined} id="progNameInput" required />
+                        <DisplayBox displayData={"Program name: " + progName || undefined} id="progNameInput" required />
+                </div>
+                <div className={classes.cBox}>
+                    <input type="checkbox"
+                    className={classes.checkbox} 
+                    onChange={handleCheckboxChange}
+                    />
+                    Smart result match. 
+                    <span>
+                    <select 
+                    type="select"
+                    name="multiplier"
+                    id="multiplier"
+                    value={multiplier}
+                    onChange={handleChangeMultiplier}
+                    >
+                        <option value="1">1x tol</option>
+                        <option value="2">2x tol</option>
+                        <option value="3">3x tol</option>
+                    </select> Matching range.</span>
+                    {cBox &&
+                   
+                    <DisplayInput 
+                    id="temp" 
+                    name="temp"
+
+                    onChange={(e) => handleRzeczyChange(e.target.value, "temp")}
+                    dynstyle={classes.displayInputAuto}
+                    autoComplete="off"
+                    ref={tempInputRef}
+                                        
+                    />
+                    
+                    }
+                  {cBox && <span className={classes.blinkingText}>AUTO</span>}
                 </div>
               
             <div className={classes.gridDisplayDiv}>
-                <div><label>Balon </label></div>
-                <div><label>Cecha</label></div>
-                <div><label>Nominał </label></div>
-                <div><label>Pomiar rzecz.</label></div>
-                <div><label>Gór. tol. </label></div>
-                <div><label>Dol. tol. </label></div>
+                <div><label>Bal.</label></div>
+                <div><label>Feature</label></div>
+                <div><label>Nominal </label></div>
+                <div><label>Actual</label></div>
+                <div><label>Upper tol. </label></div>
+                <div><label>Lower tol. </label></div>
 
-            {Array.from({length: liczbaLinii}).map((_, index)=> (
+            {
+            Object.entries(codeState).map(([_, value], index) => (
                 <React.Fragment key={index}>
                     <div key={'balon' + index}>
                         <DisplayBox 
                         id={'balon' + index} 
                         name={'balon' + index}
-                        displayData={code[index]?.balon || index + 1}
+                        displayData={codeState[index]?.balon || 0}
                     />
                     </div>
                     
@@ -170,7 +338,7 @@ export default function PlayProgram({progId, progName, progCode, progDate, progT
                         <DisplayBox 
                         id={'cecha' + index} 
                         name={'cecha' + index}
-                        displayData={code[index]?.cecha || "odleglosc"}
+                        displayData={codeState[index]?.cecha || "distance"}
                     />
                     </div>
 
@@ -178,7 +346,7 @@ export default function PlayProgram({progId, progName, progCode, progDate, progT
                     <DisplayBox 
                     id={'nominal' + index} 
                     name={'nominal' + index}
-                    displayData={code[index]?.nominal || unset}
+                    displayData={codeState[index]?.nominal || unset}
                     />
                     </div>
 
@@ -186,19 +354,21 @@ export default function PlayProgram({progId, progName, progCode, progDate, progT
                     <DisplayInput 
                     id={'rzeczy' + index} 
                     name={'rzeczy' + index}
-                    onChange={(e) => handleRzeczyChange(e, index)}
+                    onChange={(e) => handleRzeczyChange(e.target.value, index)}
                     dynstyle={dynamicClassName?.[index]?.key}
                     autoComplete="off"
-                    value={rzeczyInput[index]?.key || ""}
+                    readOnly={cBox}
+                    ref={(el => (inputRefs.current[index] = el))}
                     
                     />
+                    
                     </div>
                     
                     <div key={'upper' + index}>
                     <DisplayBox 
                     id={'upper' + index} 
                     name={'upper' + index}
-                    displayData={code[index]?.upper || unset}
+                    displayData={codeState[index]?.upper || unset}
                     
                     />
                     </div>
@@ -207,7 +377,7 @@ export default function PlayProgram({progId, progName, progCode, progDate, progT
                     <DisplayBox 
                     id={'lower' + index} 
                     name={'lower' + index}
-                    displayData={code[index]?.lower || unset}
+                    displayData={codeState[index]?.lower || unset}
                     />
                     </div>
                   </React.Fragment>
@@ -219,11 +389,31 @@ export default function PlayProgram({progId, progName, progCode, progDate, progT
             
 
             <div>
-                <ProgramButton onClick={handleSave}>Zapisz pomiar</ProgramButton>
+                <ProgramButton onClick={handleSave}>Save measurment</ProgramButton>
+                <ProgramButton onClick={() => window.location.href = `/program/${progId}`}>Edit program</ProgramButton>
+                {dbResult.success ? (
+                    <><ProgramButton onClick={() => router.push(`/raporty/${dbResult.id}`)}>
+                    Report id: {dbResult.id}
+                    </ProgramButton>
+                    <ProgramButton onClick={() => window.location.href = `/play/${progId}`}>
+                    ↻Replay.
+                    </ProgramButton></> ) 
+                    : null}
+                
             </div>
-            {dbResult.success && <div className="successcontainer">Pomyślnie zapisano pomiar</div>}
-            {dbResult.error && <div className="errorcontainer">Błąd zapisu {dbResult.error}</div>}
+            {dbResult.success && <div className="successcontainer">Measurment result has been saved.</div>}
+            {dbResult.error && <div className="errorcontainer">Saving error {dbResult.error}</div>}
             
         </div>
+        <div className={classes.spacer}></div>
+              </>  
+            ):
+            (
+                <>
+                <div className="errorcontainer">Access denied.</div>
+                </>
+            )}
+            </>
+        
     );
 }

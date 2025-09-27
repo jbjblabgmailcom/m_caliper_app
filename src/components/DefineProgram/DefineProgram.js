@@ -6,20 +6,20 @@ import classes from './page.module.css';
 import CustomInput from '../CustomInput/CustomInput';
 import CustomSelectable from '../CustomSelectable/CustomSelectable';
 import { saveProgram } from '@/db/db_server_side';
+import { useSession } from 'next-auth/react';
  
 
-export default function DefineProgram({progId, progName, progCode, progDate, progTime}) {
+export default function DefineProgram({progId, progName, progCode, progDate, progTime, owner_email}) {
 
-    //const {toggleTrigger} = useLayoutContext();
+    
 
     const [selectedTol, setSelectedTol] = useState('brak');
     const [codeState, setCodeState] = useState(JSON.parse(progCode));
     const [randProgName, setrandProgName] = useState("");
     const [dbResult, setdbResult] = useState({});
+    const { data: session } = useSession();
     
     const unset = 0;
-
-
 
     useEffect(()=> {
         setrandProgName("program" + Math.floor(10000 + Math.random() * 90000));
@@ -32,8 +32,8 @@ export default function DefineProgram({progId, progName, progCode, progDate, pro
             const lastBalon = Math.max(...Object.values(codeState).map(item => Number(item.balon) || 0));
             const newEntry = {
             balon: String(lastBalon + 1),
-            cecha: 'odleglosc',
-            nominal: '0',
+            feature: 'distance',
+            nominal: '',
             upper: '0',
             lower: '0',
             };
@@ -76,7 +76,7 @@ export default function DefineProgram({progId, progName, progCode, progDate, pro
     const progNameInput = document.getElementById('progNameInput');
     const programNameFromInput = progNameInput ? progNameInput.value : "";
     
-    const saveResult = await saveProgram(programNameFromInput, codeState, programDate, programTime);
+    const saveResult = await saveProgram(programNameFromInput, codeState, programDate, programTime, session.user.email);
     setdbResult(saveResult);
       
     
@@ -108,7 +108,12 @@ const handleOnChange = (index, name, value) => {
 
             
     function handleSelect(option) {
-        setSelectedTol(option);
+        if(selectedTol === option) {
+            setSelectedTol('brak');
+        } else {
+            setSelectedTol(option);
+        }
+        
         
     };
 
@@ -118,7 +123,7 @@ const handleOnChange = (index, name, value) => {
             }
 
             const tolerances = {
-                'f': [
+                '2768-f': [
                     { max: 6, value: 0.05 },
                     { max: 30, value: 0.1 },
                     { max: 120, value: 0.15 },
@@ -126,7 +131,7 @@ const handleOnChange = (index, name, value) => {
                     { max: 1000, value: 0.3 },
                     { value: 0.5 }
                 ],
-                'm': [
+                '2768-m': [
                     { max: 6, value: 0.1 },
                     { max: 30, value: 0.2 },
                     { max: 120, value: 0.3 },
@@ -135,7 +140,7 @@ const handleOnChange = (index, name, value) => {
                     { max: 2000, value: 1.2 },
                     { value: 2 }
                 ],
-                'c': [
+                '2768-c': [
                     { max: 3, value: 0.15 },
                     { max: 6, value: 0.2 },
                     { max: 30, value: 0.5 },
@@ -163,19 +168,23 @@ const handleOnChange = (index, name, value) => {
 }
 
     return (
+        <>
+        {owner_email === session.user.email || owner_email === undefined ? 
+        (
+        <>
         <div className={classes.defineProgramWrapper}>
                 <div>
                     <p>
-                        Program: {progName || randProgName}, Data utworzenia: {progDate}, Czas: {progTime}
+                        Program name: {progName || randProgName}, Date: {progDate}, Time: {progTime}
                     </p>
                     <CustomInput defaultValue={progName || randProgName} id="progNameInput" required />
                 </div>
                 <div>
                     <p>
-                        Wybór domyślnej tabeli tolerancji:
+                        General tolerance:
                     </p>
               
-                {["f", "m", "c"].map((option) => (
+                {["2768-f", "2768-m", "2768-c"].map((option) => (
                    <ProgramButton
                    key={option}
                    onClick={() => handleSelect(option)}
@@ -184,12 +193,12 @@ const handleOnChange = (index, name, value) => {
                 ))}
             </div>
             <div className={classes.gridDisplayDiv}>
-                <div><label>Balon </label></div>
-                <div><label>Cecha</label></div>
-                <div><label>Nominał </label></div>
-                <div><label>Górna tol. </label></div>
-                <div><label>Dolna tol. </label></div>
-                <div><label>Usuń. </label></div>
+                <div><label>Bal </label></div>
+                <div><label>Feature</label></div>
+                <div><label>Nominal </label></div>
+                <div><label>Upper.tol. </label></div>
+                <div><label>Lower.tol. </label></div>
+                <div><label>Delete. </label></div>
 
             {
                
@@ -209,13 +218,13 @@ const handleOnChange = (index, name, value) => {
                     />
                     </div>
                     
-                    <div key={'cecha' + index}>
+                    <div key={'feature' + index}>
                         <CustomSelectable 
-                        id={'cecha' + index} 
-                        name={'cecha' + index}
+                        id={'feature' + index} 
+                        name={'feature' + index}
                         className={classes.valinput}
-                        value={codeState[index]?.cecha || "odleglosc"}
-                        onChange={(event) => handleOnChange(index, 'cecha', event.target.value)}
+                        value={codeState[index]?.feature || "distance"}
+                        onChange={(event) => handleOnChange(index, 'feature', event.target.value)}
                     />
                     </div>
 
@@ -224,7 +233,7 @@ const handleOnChange = (index, name, value) => {
                         id={'nominal' + index} 
                         name={'nominal' + index}
                         className={classes.valinput}
-                        value={codeState[index]?.nominal || unset}
+                        value={codeState[index]?.nominal || ""}
                         onChange={(event) => handleOnChange(index, 'nominal', event.target.value)}
                         autoComplete="off"
                     />
@@ -267,13 +276,22 @@ const handleOnChange = (index, name, value) => {
             }
 
             </div> 
-            <div><ProgramButton onClick={addNewLine}>Dodaj nowy element</ProgramButton></div>
+            <div><ProgramButton onClick={addNewLine}>Add new line</ProgramButton></div>
 
             <div>
-                <ProgramButton onClick={handleSave}>Zapisz program</ProgramButton>
+                <ProgramButton onClick={handleSave}>Save program</ProgramButton>
+                {dbResult.success && <ProgramButton onClick={() => window.location.href = `/play/${dbResult.id}`}>Measure now</ProgramButton>} 
             </div>
-            {dbResult.success && <div className="successcontainer">Pomyślnie zapisano program</div>}
+            {dbResult.success && <div className="successcontainer">Program saved succesfully.</div>}
             
         </div>
+        </>) : (
+            <>
+        <div className="errorcontainer"><h2>Access denied</h2></div>
+        </>)
+
+        }
+        </>
+        
     );
 }

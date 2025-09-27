@@ -9,26 +9,34 @@ export default function ActiveCanvas() {
   const [activeArrow, setActiveArrow] = useState(null); // Track which arrow end is being dragged
   const [arrows, setArrows] = useState([]);
 
-  const initialData = ["label1", "label2", "label3"].reduce(
-    (acc, label, index) => {
-      const balon = index + 1;
-      acc[label] = {
-        balon,
-        text:
-          balon === 1
-            ? "19.21 -0.05"
-            : balon === 2
-            ? "18 +/-0.1"
-            : balon === 3 && "49 +/-0.1",
-        x: 50,
-        y: initY + 30 * balon, // Dynamic y value based on balon
-        color: "black",
-        bgColor: "white",
-      };
-      return acc;
-    },
-    {}
-  );
+
+
+const initialData = {
+  label1: {
+    balon: 1,
+    text: "19.21 -0.05",
+    x: 50,
+    y: initY + 30 * 1,
+    color: "black",
+    bgColor: "white",
+  },
+  label2: {
+    balon: 2,
+    text: "18 +/-0.1",
+    x: 50,
+    y: initY + 30 * 2,
+    color: "black",
+    bgColor: "white",
+  },
+  label3: {
+    balon: 3,
+    text: "49 +/-0.1",
+    x: 50,
+    y: initY + 30 * 3,
+    color: "black",
+    bgColor: "white",
+  },
+};
 
   const [data, setData] = useState(initialData);
 

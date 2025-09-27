@@ -1,7 +1,7 @@
 .wrapper {
   display: flex; /* Corrected from flexbox to flex */
-  justify-content: center; /* Centers children horizontally */
-  align-items: center; /* Centers children vertically if wrapper has a defined height */
+  justify-content:flex-start; /* Centers children horizontally */
+  
   margin-top: 1.875rem; /* 30px = 1.875rem */
   flex-direction: column; /* Default to column for better responsiveness, can be overridden */
   width: 100%; /* Ensure it takes full width */

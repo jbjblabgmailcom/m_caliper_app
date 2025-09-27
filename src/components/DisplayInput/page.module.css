@@ -1,16 +1,40 @@
 .displayInput {
-  background-color: rgb(255, 255, 255);
-  /* Responsive height using clamp() */
-  min-height: 3rem; /* 48px, a sensible minimum */
-  height: clamp(3rem, 5vh, 4rem); /* Scales between 48px and 64px, or 5% of viewport height */
-  /* Responsive font size */
-  font-size: clamp(1.25rem, 1.2rem + 0.5vw, 1.875rem); /* Scales from 20px to 30px */
-  text-align: center; /* Centers text */
-  border-radius: 0.625rem; /* 10px = 0.625rem */
-  border: solid 0.125rem black; /* 2px = 0.125rem */
-  margin: 0.3125rem; /* 5px = 0.3125rem */
-  color: black;
-  padding: 0.625rem; /* 10px = 0.625rem; Ensures text isn't too close to borders */
-  width: 100%; /* Full width */
-  outline: none; /* Removes default focus outline (optional) */
+  background: #ffffff; /* clean white */
+  color: #111827; /* modern dark gray text */
+  min-height: 3rem;
+  height: clamp(3rem, 5vh, 4rem);
+  font-size: clamp(1.125rem, 1rem + 0.6vw, 1.5rem);
+  text-align: center;
+  width: 100%;
+  
+  border: 1px solid #d1d5db; /* subtle gray border */
+  border-radius: 0.6rem;
+  margin: 0.3rem 0;
+  padding: 0.5rem 0.8rem;
+  
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.05); /* soft depth */
+  outline: none;
+  transition: all 0.25s ease;
+}
+
+/* On focus (active input state) */
+.displayInput:focus {
+  border-color: #3b82f6; /* blue focus ring */
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2); /* accessible glow */
+}
+
+/* On hover */
+.displayInput:hover {
+  background: #f9fafb;
+}
+
+/* Small screens */
+@media (max-width: 414px) {
+  .displayInput {
+    min-height: 2.5rem;
+    height: clamp(2.5rem, 4vh, 3rem);
+    font-size: clamp(0.95rem, 0.95rem + 0.4vw, 1.25rem);
+    margin: 0.25rem 0;
+    padding: 0.4rem 0.6rem;
+  }
 }

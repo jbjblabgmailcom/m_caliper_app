@@ -6,7 +6,7 @@ import { createContext, useContext, useState } from "react";
 const LayoutContext = createContext();
 
 
-export function LayoutProvider({ children }) {
+export default function LayoutProvider({ children }) {
     
     const [trigger, setTrigger] = useState(false);
     const toggleTrigger = () => {

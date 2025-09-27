@@ -1,7 +1,7 @@
 'use client';
 
 import classes from './page.module.css';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import Link from 'next/link';
 import reportbutton from '../../../public/report.png';
 
@@ -13,7 +13,9 @@ export default function ReportList({list}) {
     const [searchTerm, setSearchTerm] = useState('');
 
   
-
+    useEffect(()=>{
+        setInitProgList(list);
+    },[list]);
 
     const handleChange = (e) => {
         setSearchTerm(e.target.value);
@@ -22,7 +24,7 @@ export default function ReportList({list}) {
 
     const filteredList = Object.values(initReportList).filter(report => report.programname.includes(searchTerm));
 
-
+ 
 
 
     return (
@@ -30,6 +32,7 @@ export default function ReportList({list}) {
         
         <div className={classes.searchcontainer}>
         <input type="text" className={classes.searchinput} placeholder="Szukaj raportu wg. nazwy programu..." onChange={handleChange} />
+        
         <div className={classes.reportcontainer}>
         <table>
             <thead>

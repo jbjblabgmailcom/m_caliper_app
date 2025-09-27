@@ -1,0 +1,26 @@
+
+.container {
+  min-height: 100vh;
+  display: grid;
+  align-items: flex-start;
+  grid-template-rows: 0.1fr 0.9fr;  /* Two rows */
+ 
+}
+
+.pricingTitle {
+  padding-top: 0rem;
+  font-size: 2rem;
+  text-align: center;
+
+  font-weight: bold;
+}
+
+.pricingWrapper {
+  display: flex;
+  justify-content:center;
+  
+  gap: 1rem;
+
+  
+}
+

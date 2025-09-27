@@ -1,0 +1,42 @@
+.subscriptionTable {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: Arial, sans-serif;
+}
+
+.tableHead {
+  background-color: #f2f2f2;
+}
+
+.subscriptionTable th,
+.subscriptionTable td {
+  border: 1px solid #ccc;
+  padding: 8px;
+  text-align: left;
+}
+
+.tableBody tr:hover {
+  background-color: #f9f9f9;
+}
+
+.linkprimary {
+  color: #007bff;
+  text-decoration: none;
+  
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 0.25rem 0;
+  display: inline-block;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.linkprimary:hover,
+.linkprimary:focus {
+  color: #0056b3;
+  text-decoration: underline;
+}
+
+.linkprimary:active {
+  color: #004085;
+}

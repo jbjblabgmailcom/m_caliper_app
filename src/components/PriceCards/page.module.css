@@ -1,0 +1,88 @@
+.pricingCard {
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+    padding: 2.5rem 2rem;
+    width: 100%;
+    max-width: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.pricingCard:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.1);
+}
+
+.premium {
+    border: 3px solid #007bff;
+    box-shadow: 0 10px 40px rgba(0, 123, 255, 0.2);
+}
+
+.planTitle {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 0.5rem;
+}
+
+.planPrice {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #007bff;
+    margin-bottom: 1.5rem;
+}
+
+.planPrice span {
+    font-size: 1rem;
+    font-weight: 500;
+    color: #888;
+}
+
+.planFeatures {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 2rem;
+    line-height: 1.8;
+    text-align: left;
+    width: 100%;
+}
+
+.planFeatures li {
+    font-size: 1rem;
+    color: #555;
+    position: relative;
+    padding-left: 1.75rem;
+    margin-bottom: 0.75rem;
+}
+
+.planFeatures li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    top: 0;
+    font-weight: bold;
+    color: #28a745;
+}
+
+.planButton {
+    display: inline-block;
+    background-color: #007bff;
+    color: #ffffff;
+    padding: 0.75rem 2rem;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    font-weight: 600;
+    width: 100%;
+    text-decoration: none;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.planButton:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px);
+}

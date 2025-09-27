@@ -1,0 +1,125 @@
+
+.logincontainer {
+  width: 120px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem;
+  max-width: 320px;
+  margin: 1rem;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  border-radius: 16px;
+  background: linear-gradient(145deg, #ffffff, #f8fbff);
+  
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+
+
+@media (max-width: 850px) {
+  .logincontainer {
+    width: 70px;
+    gap: 1rem;
+    padding: 0.75rem;
+  }
+}
+
+.avatarwrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.useravatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 5%;
+  object-fit: cover;
+  border: 2px solid #3b82f6;
+  cursor: pointer;
+  transition: transform 0.25s ease;
+}
+
+.useravatar:hover {
+  transform: scale(1.08);
+ 
+}
+
+.avatarmenu {
+  display: none;
+  position: absolute;
+  top: 70px;
+  right: 0;
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 0.75rem;
+  min-width: 220px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  z-index: 100;
+  animation: fadeIn 0.25s ease-out;
+}
+
+/* Show menu on hover */
+.avatarwrapper:hover .avatarmenu,
+.logincontainer:hover .avatarmenu {
+  display: block;
+}
+
+.menuitem {
+  padding: 0.65rem 0.9rem;
+  font-size: 0.95rem;
+  color: #374151;
+  border-radius: 8px;
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+.menuitem:hover {
+  background-color: #f1f5f9;
+  color: #111827;
+  cursor: pointer;
+}
+
+.menuitem.logout {
+  color: #dc2626;
+  font-weight: 600;
+}
+
+.menuitem.logout:hover {
+  background-color: #fee2e2;
+  color: #991b1b;
+}
+
+
+.link {
+  display: block;
+  padding: 10px 16px;
+  border-radius: 8px;
+  color: #334155;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+.link:hover {
+  background-color: #f1f5f9;
+  color: #111827;
+}
+
+/* Fade-in animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.separator {
+  height: 1px;
+  background-color: #e2e8f0;
+  margin: 0.6rem 0;
+}

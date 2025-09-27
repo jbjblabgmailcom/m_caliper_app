@@ -1,0 +1,136 @@
+.container {
+  min-height: 100vh;
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 20px;
+}
+
+.card {
+  background-color: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+  padding: 4rem;
+  text-align: center;
+  width: 100%;
+  max-width: 850px;
+  position: relative;
+  transform: translateY(20px);
+  animation: fadeInMoveUp 0.8s ease-out forwards;
+}
+
+.logoContainer {
+  margin-bottom: 2rem;
+}
+
+.logo {
+  animation: rotateIn 1s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+}
+
+.title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  color: #333;
+}
+
+.introText,
+.connectionText,
+.cloudText,
+.pricingText {
+  font-size: 1.1rem;
+  line-height: 1.7;
+  color: #555;
+  margin-bottom: 1.5rem;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.introText strong,
+.connectionText strong {
+  color: #007bff;
+}
+
+.featuresSection,
+.cloudSection {
+  margin-top: 3rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #eee;
+}
+
+.sectionTitle {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  color: #444;
+}
+
+.featuresList {
+  list-style-type: none;
+  padding: 0;
+  text-align: left;
+  display: inline-block;
+  margin: 0 auto;
+}
+
+.featuresList li {
+  font-size: 1rem;
+  line-height: 1.8;
+  color: #666;
+  position: relative;
+  padding-left: 2rem;
+  margin-bottom: 0.8rem;
+}
+
+.featuresList li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  top: 0;
+  font-size: 1.2rem;
+  color: #28a745;
+  font-weight: bold;
+}
+
+@keyframes fadeInMoveUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes rotateIn {
+  from {
+    transform: rotate3d(1, 1, 0, 90deg);
+    opacity: 0;
+  }
+  to {
+    transform: rotate3d(0, 0, 0, 0deg);
+    opacity: 1;
+  }
+}
+
+@media (max-width: 768px) {
+  .card {
+    padding: 2rem;
+  }
+  .title {
+    font-size: 2rem;
+  }
+  .introText,
+  .connectionText,
+  .cloudText,
+  .pricingText {
+    font-size: 1rem;
+  }
+  .featuresList li {
+    padding-left: 1.5rem;
+  }
+}

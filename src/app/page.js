@@ -1,16 +1,21 @@
-import ActiveCanvas from "@/components/ActiveCanvas/ActiveCanvas";
+'use client';
+
 import ListBox from "@/components/ListBox/ListBox";
 
 
 
 export default function Home() {
-  return (
-    
-    <>
-    <div>
-    <ListBox />
-    </div>
-    </>
-    
-  );
-}
+
+
+
+
+    return (
+      <>
+        <div>
+        <ListBox />
+        </div>
+      </>
+    )
+  }
+
+

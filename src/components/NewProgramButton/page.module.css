@@ -1,34 +1,52 @@
 .button {
-  padding: 0.75rem 1.5rem; /* 12px 24px = 0.75rem 1.5rem */
-  border: 0.125rem solid #333; /* 2px = 0.125rem */
-  border-radius: 0.3125rem; /* 5px = 0.3125rem */
-  background-color: #89caff3f;
-  color: #333;
-  font-size: 1rem; /* 16px = 1rem */
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s;
-  margin-left: 0.3125rem; /* 5px = 0.3125rem */
-  width: clamp(120px, 40vw, 180px); /* Responsive width: min 120px, fluid 40vw, max 180px */
-  text-align: center; /* Ensures text is centered */
-  display: inline-flex; /* Use flex to center content if padding isn't enough */
+  display: inline-flex;
   justify-content: center;
   align-items: center;
+
+  padding: 0.65rem 1.2rem;
+  width: clamp(120px, 40vw, 180px);
+
+  background: linear-gradient(135deg, #60a5fa, #3b82f6); /* soft blue gradient */
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 600;
+
+  border: none; /* cleaner, no harsh border */
+  border-radius: 0.6rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+
+  cursor: pointer;
+  transition: all 0.25s ease;
+  margin-left: 0.3rem;
+  text-align: center;
 }
 
+/* Hover state */
 .button:hover {
-  background: #00a0fc48;
-  color: rgb(0, 0, 0);
+  background: linear-gradient(135deg, #3b82f6, #2563eb); /* deeper blue */
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
 }
 
-/* Optional: Adjustments for very small screens if needed for .button */
+/* Active (pressed) state */
+.button:active {
+  transform: translateY(0);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Focus (keyboard accessibility) */
+.button:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+}
+
+/* Small screens */
 @media (max-width: 414px) {
   .button {
-    padding: 1rem 2rem; /* Smaller padding */
-    font-size: 1rem; /* Smaller font */
-    width: 29%; /* Full width on very small screens */
-    margin-left: 0; /* Remove left margin when stacked */
-    margin-top: 0.0rem; /* Add top margin when stacked */
-    height:3rem;
+    width: 100%; /* take full width */
+    margin: 0.3rem 0;
+    padding: 0.75rem 1rem;
+    font-size: 0.95rem;
+    height: auto;
   }
 }

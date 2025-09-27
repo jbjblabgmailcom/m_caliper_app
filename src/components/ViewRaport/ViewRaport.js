@@ -2,22 +2,28 @@
 import React from 'react';
 
 import classes from './page.module.css';
+import { useSession } from 'next-auth/react';
+import Link from 'next/link';
 
  
 
-export default function ViewRaport({pomiarId, progId, progName, pomiarCode, pomiarDate, pomiarTime}) {
+export default function ViewRaport({pomiarId, progId, progName, pomiarCode, pomiarDate, pomiarTime, owner_email}) {
 
     const pomiar = JSON.parse(pomiarCode);
-    console.log(pomiar);
+  
+    const { data: session } = useSession();
+
 
 
     return (
-      
-        <div className="printable">     
-        <div className={classes.reportcontainer}>
-        <h2>Raport pomiarowy</h2>
-      
-        <div className={classes.reportheader}>
+        <>
+        {session.user.email === owner_email ? 
+         (
+            <>
+            <div className="printable">     
+            <div className={classes.reportcontainer}>
+            <h2>Raport pomiarowy</h2>
+             <div className={classes.reportheader}>
             <p><strong>Raport ID:</strong> {pomiarId}</p>
             <p><strong>Nazwa detalu (programu):</strong> {progName}</p>
             <p><strong>Data pomiaru:</strong> {pomiarDate}</p>
@@ -46,7 +52,7 @@ export default function ViewRaport({pomiarId, progId, progName, pomiarCode, pomi
                 </tr>
             </thead>
             <tbody>
-                
+                 
                     {Object.entries(pomiar).map(([key, {balon, cecha, nominal, rzeczPomiar, upper, lower}]) =>(
                         <tr key={key}>
                         <td>{balon}</td>
@@ -79,9 +85,21 @@ export default function ViewRaport({pomiarId, progId, progName, pomiarCode, pomi
 
             </tbody>
         </table>
-        
-    </div>
+            </div>
         </div> 
+        </>
+         )
+         : 
+         (
+            <>
+            <div className="errorcontainer"><h2>Access denied.</h2>
+            <Link href={"/raporty/"}>Go back to report list</Link>
+           </div>
+            </>
+         )
+         }
+        
+        </>
                
      
     );

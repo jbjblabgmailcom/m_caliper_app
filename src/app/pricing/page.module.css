@@ -1,0 +1,89 @@
+.container {
+    min-height: 100vh;
+    background-color: #fcfcfc;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 100px 20px 40px;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.pricingTitle {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 0.5rem;
+    animation: slideInFromTop 0.8s ease-out forwards;
+}
+
+.pricingIntro {
+    font-size: 1.1rem;
+    color: #555;
+    max-width: 600px;
+    margin: 0 auto;
+    animation: fadeIn 1.2s ease-out forwards;
+    animation-delay: 0.2s;
+    opacity: 0;
+}
+
+.pricingWrapper {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 2rem;
+    width: 100%;
+    max-width: 1200px;
+    animation: fadeInMoveUp 0.8s ease-out forwards;
+    animation-delay: 0.4s;
+    opacity: 0;
+}
+
+@keyframes slideInFromTop {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeInMoveUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 768px) {
+    .pricingTitle {
+        font-size: 2rem;
+    }
+
+    .pricingIntro {
+        font-size: 1rem;
+    }
+
+    .pricingWrapper {
+        flex-direction: column;
+        align-items: center;
+    }
+}

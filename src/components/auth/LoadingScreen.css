@@ -1,0 +1,20 @@
+.loading-container {
+  background-color: #fff;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.loading-spinner {
+  width: 60px;
+  height: 60px;
+  margin-bottom: 1rem;
+}
+
+.loading-text {
+  font-size: 1.25rem;
+  color: #10598a;
+  font-family: sans-serif;
+}

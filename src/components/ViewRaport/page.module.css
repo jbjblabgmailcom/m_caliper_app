@@ -1,13 +1,7 @@
 .reportcontainer {
-  margin-top: 3.125rem; /* 50px = 3.125rem */
   max-width: clamp(300px, 100vw, 800px); /* Responsive max-width */
-  margin-left:auto; /* Ensures horizontal centering */
-  margin-right:auto; /* Ensures horizontal centering */
   background: white;
-  
-  border-radius: 0.5rem; /* 8px = 0.5rem */
-  
-}
+  }
 
 
 

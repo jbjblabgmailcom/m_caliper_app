@@ -1,10 +1,16 @@
 'use server';
 
-import { fetchProgramsFromDB, fetchDaneProgramuFromDB, saveProgramInDB, savePomiarInDB, fetchDaneRaportuFromDB, fetchAllReportsFromDB } from './db_actions.js'
+import { fetchProgramsFromDB, fetchDaneProgramuFromDB, saveProgramInDB, savePomiarInDB, fetchDaneRaportuFromDB, fetchAllReportsFromDB, fetchUserDataFromDB } from './db_actions.js'
 
-export async function fetchProgramsList() {
+export async function fetchProgramsList(owner_email, limiter) {
+    let programsList;
     try {
-        const programsList = await fetchProgramsFromDB();
+        if(!limiter) {
+            programsList = await fetchProgramsFromDB(owner_email);
+        } else {
+            programsList = await fetchProgramsFromDB(owner_email, limiter);
+        }
+        
         return programsList;
     } catch (error) {
         console.error('Fetching program list failed', error);
@@ -28,11 +34,13 @@ export async function fetchDaneProgramu(id) {
    
 }
 
-export async function saveProgram(programid, programname, programcode, date, time) {
+export async function saveProgram(programid, programname, programcode, date, time, owner_email) {
     
     try {
-        await saveProgramInDB(programid, programname, programcode, date, time);
-        return {"success": true};
+        const id = await saveProgramInDB(programid, programname, programcode, date, time, owner_email);
+        return {"success": true,
+            "id": id,
+        };
     } catch (error) {
         console.error('Program saving error', error);
         throw error;
@@ -42,11 +50,13 @@ export async function saveProgram(programid, programname, programcode, date, tim
 }
 
 
-export async function savePomiar(progName, pomiar, date, time) {
+export async function savePomiar(progName, pomiar, date, time, owner_email) {
     
     try {
-        await savePomiarInDB(progName, pomiar, date, time);
-        return {"success": true};
+        const id = await savePomiarInDB(progName, pomiar, date, time, owner_email);
+        return {"success": true,
+                "id": id
+        };
     } catch (error) {
         console.error('Measurement saving error', error);
         throw error;
@@ -70,14 +80,30 @@ export async function fetchDaneRaportu(id) {
     return daneraportu;
 }
 
-export async function fetchAllReports() {
+export async function fetchAllReports(owner_email) {
     
     try {
-       const allReports = await fetchAllReportsFromDB();
+       const allReports = await fetchAllReportsFromDB(owner_email);
        return allReports;
 
     } catch (error) {
         console.error("Error fetching reports ", error);
+        throw error;
+    }
+
+    
+
+}
+
+
+export async function fetchUserData(owner_email) {
+    
+    try {
+       const userData = await fetchUserDataFromDB(owner_email);
+       return userData;
+
+    } catch (error) {
+        console.error("Error fetching this users data ", error);
         throw error;
     }
 
