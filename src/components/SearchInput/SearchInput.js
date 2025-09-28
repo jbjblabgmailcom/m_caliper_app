@@ -27,7 +27,7 @@ export default function SearchInput() {
         }
     
         userData();
-      },[]);
+      },[session.user.email]);
 
     const handleChange = (e) => {
         setSearchTerm(e.target.value);
@@ -59,7 +59,7 @@ export default function SearchInput() {
         
         
 
-    },[usrData]);
+    },[usrData, session.user.email]);
 
     return (
         <div className={classes.searchcontainer}>

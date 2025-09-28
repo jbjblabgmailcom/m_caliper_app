@@ -5,7 +5,7 @@ import { fetchUserData } from '@/db/db_server_side';
 import { useSession, signIn, signOut } from 'next-auth/react';
 import classes from './page.module.css';
 import Link from 'next/link';
-
+import Image from 'next/image';
 
 export default function Panel() {
 
@@ -30,7 +30,7 @@ export default function Panel() {
         <div>
             <h2>Users account information.</h2>
             <h3>Current session info:</h3>
-            <img src={session.user.image} />
+            <Image src={session.user.image} width={50} height={50} alt="user avatar" />
             <p>Users name: {session.user.name}</p>
             <p>Users email: {session.user.email}</p>
             

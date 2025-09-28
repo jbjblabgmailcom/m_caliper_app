@@ -3,7 +3,7 @@
 
 .wrappercontainer {
   display: flexbox;
-  align-items:start;
+  align-items:flex-start;
   /* Ensures it takes full available width */
   width: 100%;
   min-height: 100vh; /* Make sure it takes at least the full viewport height */
@@ -21,7 +21,7 @@
 .buttonContainer {
   display: flex;
   flex-direction: row; /* Stacks the buttons vertically */
-  gap: 10px; /* Adds space between the stacked buttons */
+  gap: 10px; /* Adds space betrefixer: ween the stacked buttons */
   /* Adjust alignment within the column if needed, e.g., align-items: flex-start; */
 }
 

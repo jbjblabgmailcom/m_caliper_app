@@ -19,10 +19,10 @@ export default function AboutPage() {
           </div>
           <h1 className={classes.title}>Welcome to Smart CaliperApp</h1>
           <p className={classes.introText}>
-            <strong>Smart CaliperApp</strong> is a powerful, browser-based tool designed to enhance and automate the process of dimensional measurement. It's built for quality control engineers, hobbyists, companies, and students, transforming how you work with digital calipers and gauges.
+            <strong>Smart CaliperApp</strong> is a powerful, browser-based tool designed to enhance and automate the process of dimensional measurement. It&apos;s built for quality control engineers, hobbyists, companies, and students, transforming how you work with digital calipers and gauges.
           </p>
           <p className={classes.connectionText}>
-            Unlike traditional software, <strong>Smart CaliperApp</strong> doesn't require any special drivers or device integrations. It reads input directly from your measurement tools the same way a keyboard sends data to your computer—supporting virtually any device (wired or wireless) that emulates keyboard input.
+            Unlike traditional software, <strong>Smart CaliperApp</strong> doesn&apos;t require any special drivers or device integrations. It reads input directly from your measurement tools the same way a keyboard sends data to your computer—supporting virtually any device (wired or wireless) that emulates keyboard input.
           </p>
           <div className={classes.logoContainer}>
             <Image src={heightGauge} width={150} alt="Height gauge picture" className={classes.logo} />

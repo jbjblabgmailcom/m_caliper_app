@@ -1,4 +1,5 @@
 'use client';
+import Image from "next/image";
 
 import { useSession, signIn, signOut } from 'next-auth/react';
 import './LoginControler.css';
@@ -14,11 +15,6 @@ export default function LoginControler() {
   const [usrData, setusrData] = useState({});
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   
-  const handleAvatarClick = () => {
-    setIsMenuOpen(!isMenuOpen);
-  };
-
-
   useEffect(()=>{
     const userData = async () => {
       const result = await fetchUserData(session.user.email);
@@ -33,11 +29,13 @@ export default function LoginControler() {
     return (
       <div className="logincontainer">
         <div className="avatarwrapper">
-          <img
+          <Image
+            width="50"
+            height="50"
             src={session.user.image}
             alt="User avatar"
             className="useravatar"
-            onClick={handleAvatarClick}
+           
 
           />
          
