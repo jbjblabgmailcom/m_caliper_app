@@ -1,50 +1,56 @@
 .container {
-    min-height: 100vh;
-    background-color: #fcfcfc;
+    /* Aligned with first style sheet */
     display: flex;
-    align-items: center;
     justify-content: center;
-    padding: 100px 20px 40px; /* Added top padding to account for the fixed TopMenu */
+    padding: 40px 20px; /* Reduced padding from 100px */
+    background-color: #f0f2f5; /* Light background for the page */
+    /* Removed min-height, align-items, and animation-related properties */
 }
 
 .card {
+    /* Aligned with first style sheet */
     background-color: #ffffff;
-    padding: 3rem;
     border-radius: 12px;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
-    text-align: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Lighter shadow */
+    padding: 40px; /* Adjusted padding to match first sheet */
+    max-width: 1200px; /* Increased max-width for documentation content */
     width: 100%;
-    max-width: 700px;
-    transform: translateY(20px);
-    animation: fadeInMoveUp 0.8s ease-out forwards;
+    /* Removed animation, transform, and text-align: center */
 }
 
-.title {
-    font-size: 2.2rem;
-    font-weight: 700;
-    color: #333;
-    margin-bottom: 2rem;
+/* Renamed to mainTitle for consistency */
+.mainTitle {
+    /* Aligned with first style sheet */
+    color: #007bff; /* Blue color matching the app buttons */
+    border-bottom: 3px solid #007bff;
+    padding-bottom: 10px;
+    margin-bottom: 30px;
+    font-size: 2em; /* Adjusted to 2em from 2.2rem */
+    text-align: center;
+    font-weight: normal; /* Removed font-weight: 700 */
 }
 
-.contentSection {
-    margin-bottom: 2.5rem;
+/* Renamed from .contentSection to .manualContent (or general section styles) */
+/* This style is not directly equivalent in the first sheet, but we can reuse the .demoInfo for general text style */
+.manualContent {
+    line-height: 1.6; /* Matched first sheet's line height */
+    color: #333; /* Matched first sheet's text color */
+    margin-bottom: 2.5rem; /* Kept margin-bottom for separation */
 }
 
 .sectionTitle {
-    font-size: 1.5rem;
-    font-weight: 600;
-    color: #444;
-    margin-bottom: 1rem;
+    /* Aligned with first style sheet */
+    color: #007bff; /* Blue color */
+    margin-top: 30px;
+    margin-bottom: 15px;
+    font-size: 1.6em; /* Adjusted to 1.6em from 1.5rem */
+    font-weight: normal; /* Removed font-weight: 600 */
 }
 
-.demoInfo {
-    font-size: 1.1rem;
-    line-height: 1.7;
-    color: #555;
-    margin-bottom: 1.5rem;
-}
+/* The original .demoInfo class is replaced by the general .manualContent text style */
 
 .link {
+    /* Kept similar link styles */
     color: #007bff;
     text-decoration: none;
     font-weight: 600;
@@ -52,17 +58,20 @@
 }
 
 .link:hover {
+    /* Kept similar link styles */
     color: #0056b3;
     text-decoration: underline;
 }
 
-.upgradeSection {
+/* Renamed from .upgradeSection, no direct equivalent in first sheet, keeping a generic section separator */
+.separatorSection {
     margin-top: 2rem;
     padding-top: 2rem;
     border-top: 1px solid #eee;
 }
 
 .ctaButton {
+    /* Kept as a general button style */
     display: inline-block;
     background-color: #007bff;
     color: #ffffff;
@@ -76,15 +85,4 @@
 .ctaButton:hover {
     background-color: #0056b3;
     transform: translateY(-2px);
-}
-
-@keyframes fadeInMoveUp {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
 }

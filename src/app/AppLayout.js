@@ -29,9 +29,9 @@ export default function AppLayout({ children }) {
             <Image src={logoImg} width="250" alt="logo image" className={classes.logo} />
           </div>
           <div className={classes.buttonContainer}>
-            <Link href="/"><ProgramButton>Strona główna</ProgramButton></Link>
-            <Link href="/program"><ProgramButton>Nowy program</ProgramButton></Link>
-            <Link href="/raporty"><ProgramButton>Raporty</ProgramButton></Link>
+            <Link href="/"><ProgramButton>Programs list</ProgramButton></Link>
+            <Link href="/program"><ProgramButton>New program</ProgramButton></Link>
+            <Link href="/reports"><ProgramButton>Reports</ProgramButton></Link>
           </div>
         </div>
         <div className={classes.content}>{children}</div>

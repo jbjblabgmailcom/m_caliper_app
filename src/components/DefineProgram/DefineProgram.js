@@ -20,6 +20,7 @@ export default function DefineProgram({progId, progName, progCode, progDate, pro
     const { data: session } = useSession();
     
     const unset = 0;
+    const unsetul = '';
 
     useEffect(()=> {
         setrandProgName("program" + Math.floor(10000 + Math.random() * 90000));
@@ -50,8 +51,6 @@ export default function DefineProgram({progId, progName, progCode, progDate, pro
     
     const handleRemove = (index) => {
     setCodeState(prev => {
-        console.log('prev', prev);
-        
         const objectSize = Object.keys(codeState).length;
         if(objectSize>0) {
                     const reindexed = Object.values(prev).filter((_, i) => i !== index).reduce((acc, item, i) => {
@@ -75,7 +74,7 @@ export default function DefineProgram({progId, progName, progCode, progDate, pro
     const programTime = new Date().toLocaleTimeString();
     const progNameInput = document.getElementById('progNameInput');
     const programNameFromInput = progNameInput ? progNameInput.value : "";
-    
+    console.log("KODE STATE", codeState);
     const saveResult = await saveProgram(programNameFromInput, codeState, programDate, programTime, session.user.email);
     setdbResult(saveResult);
       
@@ -84,26 +83,37 @@ export default function DefineProgram({progId, progName, progCode, progDate, pro
     }
 
 const handleOnChange = (index, name, value) => {
-        setCodeState(prevCodeState => {
-           const updatedCodeState = { ...prevCodeState };
+  const isNumeric = Number.isFinite(Number(value)) || value === "-";
+  const isFeature = name === "feature";
 
-            if (updatedCodeState[index]) {
-               const updatedItem = { ...updatedCodeState[index] };
-               updatedItem[name] = value;
-               if(name == 'nominal') {
-                const newTol = handleNominalChange(Math.abs(value));
-                updatedItem['upper'] = String(newTol);
-                updatedItem['lower'] = String(-newTol);
-               }
-                updatedCodeState[index] = updatedItem;
-            } else {
-                console.warn(`Attempted to update non-existent index: ${index}`);
-              
-            }
+  if (!isNumeric && !isFeature) return;
 
-            return updatedCodeState;
-        });
-    };
+  setCodeState(prev => {
+    const updated = { ...prev };
+    const item = updated[index];
+
+    if (!item) {
+      console.warn(`Attempted to update non-existent index: ${index}`);
+      return updated;
+    }
+
+    const newItem = { ...item, [name]: value };
+
+    if (name === "nominal") {
+      if (item.feature === "pos") {
+        newItem.upper = String(value);
+        newItem.lower = "0";
+      } else {
+        const tol = handleNominalChange(Math.abs(value));
+        newItem.upper = String(tol);
+        newItem.lower = String(-tol);
+      }
+    }
+
+    updated[index] = newItem;
+    return updated;
+  });
+};
 
 
             
@@ -244,7 +254,7 @@ const handleOnChange = (index, name, value) => {
                     id={'upper' + index} 
                     name={'upper' + index}
                     className={classes.valinput}
-                    value={codeState[index]?.upper || unset}
+                    value={codeState[index]?.upper || unsetul}
                     onChange={(event) => handleOnChange(index, 'upper', event.target.value)}
                     
                     />
@@ -255,13 +265,15 @@ const handleOnChange = (index, name, value) => {
                     id={'lower' + index} 
                     name={'lower' + index}
                     className={classes.valinput}
-                    value={codeState[index]?.lower || unset}
+                    value={codeState[index]?.lower || unsetul}
                     onChange={(event) => handleOnChange(index, 'lower', event.target.value)}
                     
                     />
                     </div>
+                    
                     <div key={'delete' + index} id={'delete' + index}>
                     <button 
+                    disabled={index === 0}
                     onClick={() => handleRemove(index)}
                     >X
                     </button>

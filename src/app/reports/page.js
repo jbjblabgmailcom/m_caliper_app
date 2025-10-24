@@ -27,10 +27,7 @@ export default function RaportyPage () {
     
         },[session.user.email]);
     
-        useEffect(()=> {
-            console.log(allReports);
-            
-        },[allReports])
+  
 
 
         return <ReportList list={allReports} />;  

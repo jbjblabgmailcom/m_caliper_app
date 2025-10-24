@@ -1,28 +1,32 @@
 .container {
+  /* Set background color once */
+  background-color: #ffffff; 
   min-height: 100vh;
-  background-color: #ffffff;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 80px 20px;
+  padding: 80px 20px; /* Generous desktop padding */
 }
 
 .card {
   background-color: #ffffff;
   border-radius: 20px;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+  /* Use a slightly less harsh shadow */
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08); 
   padding: 4rem;
   text-align: center;
   width: 100%;
   max-width: 850px;
   position: relative;
+  /* Keep animation but ensure good defaults */
+  opacity: 0; 
   transform: translateY(20px);
   animation: fadeInMoveUp 0.8s ease-out forwards;
 }
 
 .logoContainer {
-  margin-bottom: 2rem;
+  margin-bottom: 2.5rem; /* Slightly increased spacing */
 }
 
 .logo {
@@ -43,7 +47,7 @@
   font-size: 1.1rem;
   line-height: 1.7;
   color: #555;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.8rem; /* Consistent bottom margin */
   max-width: 700px;
   margin-left: auto;
   margin-right: auto;
@@ -56,13 +60,13 @@
 
 .featuresSection,
 .cloudSection {
-  margin-top: 3rem;
-  padding-top: 1.5rem;
+  margin-top: 3.5rem; /* Slightly increased top margin for separation */
+  padding-top: 2rem;
   border-top: 1px solid #eee;
 }
 
 .sectionTitle {
-  font-size: 1.5rem;
+  font-size: 1.6rem; /* Slightly larger for emphasis */
   font-weight: 600;
   margin-bottom: 1.5rem;
   color: #444;
@@ -72,7 +76,10 @@
   list-style-type: none;
   padding: 0;
   text-align: left;
-  display: inline-block;
+  /* Use flexbox for centering lists that aren't full width */
+  display: flex; 
+  flex-direction: column;
+  align-items: flex-start;
   margin: 0 auto;
 }
 
@@ -95,6 +102,7 @@
   font-weight: bold;
 }
 
+/* Animations */
 @keyframes fadeInMoveUp {
   from {
     opacity: 0;
@@ -117,20 +125,59 @@
   }
 }
 
+/* ======================================================================== */
+/* 2. MOBILE-SPECIFIC STYLES (Max-Width 768px) */
+/* ======================================================================== */
+
 @media (max-width: 768px) {
+    
+  .container {
+    padding: 170px 10px; /* Reduced vertical padding */
+    justify-content: flex-start; /* Start content from the top on mobile */
+  }
+
   .card {
-    padding: 2rem;
+    padding: 2rem 1.5rem; /* Reduced padding for better screen usage */
+    border-radius: 12px; /* Slightly smaller radius */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05); /* Lighter shadow on mobile */
   }
+    
+  .logoContainer {
+    margin-bottom: 1.5rem; /* Reduced space */
+  }
+
   .title {
-    font-size: 2rem;
+    font-size: 1.8rem; /* Smaller title */
+    margin-bottom: 1rem;
   }
+    
+  /* Consistent text size adjustment */
   .introText,
   .connectionText,
   .cloudText,
   .pricingText {
     font-size: 1rem;
+    margin-bottom: 1.2rem;
   }
+
+  .featuresSection,
+  .cloudSection {
+    margin-top: 2rem;
+    padding-top: 1rem;
+  }
+
+  .sectionTitle {
+    font-size: 1.3rem; /* Smaller section title */
+    margin-bottom: 1rem;
+  }
+
   .featuresList li {
+    font-size: 0.95rem; /* Slightly smaller list items for space */
     padding-left: 1.5rem;
+    margin-bottom: 0.6rem;
+  }
+
+  .featuresList li::before {
+    font-size: 1.1rem;
   }
 }

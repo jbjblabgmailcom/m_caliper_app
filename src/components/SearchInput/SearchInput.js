@@ -18,6 +18,7 @@ export default function SearchInput() {
     const {trigger} = useLayoutContext();
     const { data: session } = useSession();
     const [usrData, setusrData] = useState({});
+  
     
       useEffect(()=>{
         const userData = async () => {
@@ -29,19 +30,21 @@ export default function SearchInput() {
         userData();
       },[session.user.email]);
 
+
+
     const handleChange = (e) => {
         setSearchTerm(e.target.value);
 
     }
 
-    const filteredList = Object.values(initProgList).filter(prog => prog.programname.includes(searchTerm));
+    
 
 
     useEffect(()=> {
         const updateProgList = async () => {
             let result; 
             try {
-                if(Object.keys(usrData || {}).length === 0) {
+                if(usrData.subscription_status === null) {
                 result =  await fetchProgramsList(session.user.email, 2);  
                 } else {
                     result =  await fetchProgramsList(session.user.email);
@@ -54,25 +57,35 @@ export default function SearchInput() {
 
         }
 
-        
+                if (!usrData || Object.keys(usrData).length === 0) return;
                 updateProgList();
         
+ 
+    },[usrData, session.user.email]);
+
+    
+
+           const filteredList = Object.values(initProgList).filter(prog =>
+            prog.programname.includes(searchTerm));
+
+           
+           
+     
         
 
-    },[usrData, session.user.email]);
 
     return (
         <div className={classes.searchcontainer}>
-        <input type="text" className={classes.searchinput} placeholder="Szukaj..." onChange={handleChange} />
-            {Object.keys(usrData || {}).length === 0 && (
-                <div><p>Limited to two active programs. Please <Link href="/checkout"><span className={classes.spanlink}>upgrade here </span></Link> </p></div>
+        <input type="text" className={classes.searchinput} placeholder="Filter by program name..." onChange={handleChange} />
+            {usrData.subscription_status === null && (
+                <div><p>Free Plan is limited to two active programs. Please <Link href="/checkout"><span className={classes.spanlink}>upgrade here </span></Link> </p></div>
                     )}
         <div className={classes.ulcontainer}>
             <ul className={classes.ul}>
                 {Object.values(filteredList).map((prog, index) => (
                     <li  key={prog.programid} className={classes.li}>
                         
-                        <div className={classes.borderDiv}><Link href={`/program/${prog.programid}`}><div className={classes.extraDiv}>{prog.programname}</div></Link></div>
+                        <div className={classes.borderDiv}><Link href={`/play/${prog.programid}`}><div className={classes.extraDiv}>{prog.programname}</div></Link></div>
                         <div className={classes.borderDiv}><Link href={`/program/${prog.programid}`}><Image src={editbutton} alt="edit button" width="35" /></Link></div>
                         <div className={classes.borderDiv}><Link href={`/play/${prog.programid}`}><Image src={playbutton} alt="play button" width="35" /></Link></div>
                         

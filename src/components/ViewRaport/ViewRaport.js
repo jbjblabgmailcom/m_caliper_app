@@ -12,7 +12,7 @@ export default function ViewRaport({pomiarId, progId, progName, pomiarCode, pomi
     const pomiar = JSON.parse(pomiarCode);
   
     const { data: session } = useSession();
-
+    //console.log(pomiarDate);
 
 
     return (
@@ -22,12 +22,12 @@ export default function ViewRaport({pomiarId, progId, progName, pomiarCode, pomi
             <>
             <div className="printable">     
             <div className={classes.reportcontainer}>
-            <h2>Raport pomiarowy</h2>
+            <h2>Measurement report</h2>
              <div className={classes.reportheader}>
-            <p><strong>Raport ID:</strong> {pomiarId}</p>
-            <p><strong>Nazwa detalu (programu):</strong> {progName}</p>
-            <p><strong>Data pomiaru:</strong> {pomiarDate}</p>
-            <p><strong>Czas pomiaru:</strong> {pomiarTime}</p>
+            <p><strong>Report Id:</strong> {pomiarId}</p>
+            <p><strong>Program name:</strong> {progName}</p>
+            <p><strong>Measure date:</strong> {pomiarDate.split('T')[0]}</p>
+            <p><strong>Measure time:</strong> {pomiarTime}</p>
         </div>
         
         <table className={classes.reportTable}>
@@ -43,35 +43,35 @@ export default function ViewRaport({pomiarId, progId, progName, pomiarCode, pomi
             <thead>
                 <tr>
                     <th>Bal</th>
-                    <th>Cecha</th>
-                    <th>Nom</th>
-                    <th>Rzecz</th>
-                    <th>Odch</th>
+                    <th>Feature</th>
+                    <th>Nominal</th>
+                    <th>Actual</th>
+                    <th>Error</th>
                     <th>↑ tol</th>
                     <th>↓ tol</th>
                 </tr>
             </thead>
             <tbody>
                  
-                    {Object.entries(pomiar).map(([key, {balon, cecha, nominal, rzeczPomiar, upper, lower}]) =>(
+                    {Object.entries(pomiar).map(([key, {balon, feature, nominal, rzeczPomiar, upper, lower}]) =>(
                         <tr key={key}>
                         <td>{balon}</td>
-                        <td>{cecha}</td>
+                        <td>{feature}</td>
                         <td>{nominal}</td>
                         
-                        {cecha === "poz" ? 
+                        {feature === "pos" ? 
                         (
-                            <td className={ Number(rzeczPomiar) >= Number(lower) && Number(rzeczPomiar) <= Number(upper) ? classes.greenCell : classes.redCell }>{rzeczPomiar}</td>
+                            <td className={ Number(rzeczPomiar) >= 0 && Number(rzeczPomiar) <= Number(nominal) ? classes.greenCell : classes.redCell }>{rzeczPomiar}</td>
                         ) : 
                         (
                             <td className={(Number(rzeczPomiar) >= Number(nominal) + Number(lower)) && (Number(rzeczPomiar) <= Number(nominal) + Number(upper)) 
                                 ? classes.greenCell : classes.redCell}>{rzeczPomiar}</td>
                         ) }
                        
-                        <td>{cecha === 'poz' ? (
-                            Number(rzeczPomiar).toFixed(2)
+                        <td>{feature === 'pos' ? (
+                            Number(rzeczPomiar).toFixed(2) - Number(nominal).toFixed(2)
                         ) : (
-                            (Number(rzeczPomiar) - Number(nominal)).toFixed(2)
+                            (Number(rzeczPomiar).toFixed(2) - Number(nominal)).toFixed(2)
                         )
                         }</td>
 

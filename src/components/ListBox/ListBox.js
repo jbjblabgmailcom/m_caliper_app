@@ -5,7 +5,7 @@ export default function ListBox() {
 
     return (
         <div className={classes.listboxcontainer}>
-            Lista programów:
+            Your programs:
             <SearchInput />
 
         </div>

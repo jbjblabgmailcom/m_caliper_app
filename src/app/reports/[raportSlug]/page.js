@@ -16,7 +16,7 @@ export default async function ReportSrv({params}) {
         {!daneraportu && typeof daneraportu !== "object" ||  daneraportu instanceof Error ? (
             <>
             <div className="errorcontainer"><h2>Access denied.</h2>
-            <Link href={"/raporty/"}>Go back to report list</Link>
+            <Link href={"/reports/"}>Go back to report list</Link>
            </div>
             </>
         ) : (
@@ -25,7 +25,7 @@ export default async function ReportSrv({params}) {
             progId={daneraportu?.programid}
             progName={daneraportu?.programname} 
             pomiarCode={daneraportu?.pomiar}
-            pomiarDate={daneraportu?.date.toLocaleDateString()}
+            pomiarDate={daneraportu?.date.toISOString()}
             pomiarTime={daneraportu?.time}
             owner_email={daneraportu?.owner_email}
             />

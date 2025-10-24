@@ -8,6 +8,8 @@ import DisplayBox from '../DisplayBox/DisplayBox';
 import DisplayInput from '../DisplayInput/DisplayInput';
 import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
+
+import CustomSelectable from '../CustomSelectable/CustomSelectable';
  
 
 export default function PlayProgram({progId, progName, progCode, progDate, progTime, owner_email}) {
@@ -92,8 +94,8 @@ export default function PlayProgram({progId, progName, progCode, progDate, progT
 
                     let conditionMet = false;
 
-                    if (item.cecha === 'poz') {
-                        conditionMet = value >= lower && value <= nominal + (upper * Number(multiplier));
+                    if (item.feature === 'pos') {
+                        conditionMet = value >= 0 && value <= upper * Number(multiplier);
                     } else {
                         conditionMet = value >= nominal + (lower * Number(multiplier)) && value <= nominal + (upper * Number(multiplier));
                     }
@@ -121,7 +123,7 @@ export default function PlayProgram({progId, progName, progCode, progDate, progT
 
         for (let i = 0; i <= liczbaLinii-1; i++) {
             const balon = codeState[i]?.balon;
-            const cecha = codeState[i]?.cecha;
+            const feature = codeState[i]?.feature;
             const nominal = codeState[i]?.nominal;
 
             const rzeczywistyElement = inputRefs.current[i];
@@ -137,7 +139,7 @@ export default function PlayProgram({progId, progName, progCode, progDate, progT
             } else {
                 pomiarCode[i] = {
                     "balon" : balon,
-                    "cecha" : cecha,
+                    "feature" : feature,
                     "nominal" :  nominal,
                     "rzeczPomiar" : String(Number(rzeczPomiar).toFixed(3)),
                     "upper" : upper,
@@ -165,6 +167,7 @@ function handleRzeczyChange(val, index) {
             let rzeczy = Number(val.replace(",", "."));
             const tempInput = tempInputRef;
             const newIndex = findIndex(rzeczy);
+            console.log("New index", newIndex);
             if(newIndex === -1) {
                 tempInput.current.value = "";
                     tempInput.current.focus();
@@ -175,7 +178,8 @@ function handleRzeczyChange(val, index) {
                     i === newIndex ? { ...rzeczyInput, key: rzeczy} : rzeczyInput
                               )
             );
-            const {nominal, upper, lower, cecha} = codeState[newIndex] || {};
+            console.log(codeState);
+            const {nominal, upper, lower, feature} = codeState[newIndex] || {};
             const nom = Number(nominal);
             const upp = Number(upper);
             const low = Number(lower);
@@ -183,9 +187,9 @@ function handleRzeczyChange(val, index) {
 
                 if (rzeczy === "") {
                     newClass = classes.displayInputBlank;
-                } else if (cecha === "poz") {
-                    newClass = (rzeczy >= low && rzeczy <= upp) ? classes.displayInputOK : classes.displayInputNotOK;
-                } else {
+                } else if (feature === "pos") {
+                    newClass = (rzeczy >= 0 && rzeczy <= nom) ? classes.displayInputOK : classes.displayInputNotOK;
+                    } else {
                     newClass = (rzeczy >= nom + low && rzeczy <= nom + upp) ? classes.displayInputOK : classes.displayInputNotOK;
                 }
 
@@ -217,7 +221,7 @@ function handleRzeczyChange(val, index) {
                     )
                     );
             
-            const {nominal, upper, lower, cecha} = codeState[index] || {};
+            const {nominal, upper, lower, feature} = codeState[index] || {};
             const nom = Number(nominal);
             const upp = Number(upper);
             const low = Number(lower);
@@ -227,8 +231,8 @@ function handleRzeczyChange(val, index) {
 
                 if (rzeczy === "") {
                     newClass = classes.displayInputBlank;
-                } else if (cecha === "poz") {
-                    newClass = (rzeczy >= low && rzeczy <= upp) ? classes.displayInputOK : classes.displayInputNotOK;
+                } else if (feature === "pos") {
+                    newClass = (rzeczy >= 0 && rzeczy <= nom) ? classes.displayInputOK : classes.displayInputNotOK;
                 } else {
                     newClass = (rzeczy >= nom + low && rzeczy <= nom + upp) ? classes.displayInputOK : classes.displayInputNotOK;
                 }
@@ -334,11 +338,11 @@ function handleRzeczyChange(val, index) {
                     />
                     </div>
                     
-                    <div key={'cecha' + index}>
-                        <DisplayBox 
-                        id={'cecha' + index} 
-                        name={'cecha' + index}
-                        displayData={codeState[index]?.cecha || "distance"}
+                    <div key={'feature' + index}>
+                        <CustomSelectable 
+                        id={'feature' + index} 
+                        name={'feature' + index}
+                        displayData={codeState[index]?.feature || "distance"}
                     />
                     </div>
 
@@ -392,17 +396,17 @@ function handleRzeczyChange(val, index) {
                 <ProgramButton onClick={handleSave}>Save measurment</ProgramButton>
                 <ProgramButton onClick={() => window.location.href = `/program/${progId}`}>Edit program</ProgramButton>
                 {dbResult.success ? (
-                    <><ProgramButton onClick={() => router.push(`/raporty/${dbResult.id}`)}>
+                    <><ProgramButton onClick={() => router.push(`/reports/${dbResult.id}`)}>
                     Report id: {dbResult.id}
                     </ProgramButton>
                     <ProgramButton onClick={() => window.location.href = `/play/${progId}`}>
                     ↻Replay.
                     </ProgramButton></> ) 
                     : null}
-                
+            
             </div>
-            {dbResult.success && <div className="successcontainer">Measurment result has been saved.</div>}
-            {dbResult.error && <div className="errorcontainer">Saving error {dbResult.error}</div>}
+             {dbResult.success && <div className="successcontainer">Measurment result has been saved.</div>}
+            {dbResult.error && <div className="errorcontainer">Saving error {dbResult.error}</div>}   
             
         </div>
         <div className={classes.spacer}></div>

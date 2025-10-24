@@ -13,8 +13,8 @@ export default async function Play({params}) {
     const progId = await params;
     const daneprogramu = await fetchDaneProgramu(progId.play);
     const nowDate = new Date();
-    const currentDate = nowDate.toLocaleDateString;
-    const currentTime = nowDate.toLocaleTimeString;
+    const currentDate = nowDate.toLocaleDateString();
+    const currentTime = nowDate.toLocaleTimeString();
     
 
     return <>

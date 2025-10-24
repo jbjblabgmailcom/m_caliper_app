@@ -11,27 +11,37 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
   transition: box-shadow 0.3s ease, transform 0.3s ease;
 }
-
+ 
 .defineProgramWrapper:hover {
   
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
 }
 
-@media (max-width: 414px) {
+@media (max-width: 768px) {
   .defineProgramWrapper {
-    margin: 0.5rem auto;
+    /* MAX SPACE CHANGE 1: Minimize margin and padding on the main wrapper */
+    margin: 0 auto; 
     border: none;
     box-shadow: none;
-    padding: 0.5rem;
+    padding: 0; 
   }
 }
 
 .defineProgramWrapper > div {
+  /* Default padding for children */
   padding: 0.5rem;
-  width: 100%;
+  width: 90%;
 }
 
-/* Primary button */
+@media (max-width: 768px) {
+    .defineProgramWrapper > div {
+        /* MAX SPACE CHANGE 2: Reduce padding on internal section containers */
+        padding: 0.25rem; 
+    }
+}
+
+
+/* Primary button (No significant space changes needed here, as the button itself scales well) */
 .selectedButton {
   padding: 0.75rem;
   border: 2px solid #2563eb;
@@ -54,7 +64,7 @@
   box-shadow: 0 6px 12px rgba(37, 99, 235, 0.35);
 }
 
-@media (max-width: 414px) {
+@media (max-width: 768px) {
   .selectedButton {
     padding: 0.5rem 1rem;
     font-size: 0.95rem;
@@ -95,26 +105,33 @@
   align-items: center;
 }
 
-@media (max-width: 414px) {
+@media (max-width: 768px) {
   .valueDynamicForm {
     flex-direction: column;
     align-items: stretch;
-    gap: 0.4rem;
+    /* MAX SPACE CHANGE 3: Reduce gap between form elements */
+    gap: 0.2rem; 
   }
 }
 
 /* Grid display */
 .gridDisplayDiv {
   display: grid;
+  /* Desktop columns: 5 content, 1 action (0.3fr) */
   grid-template-columns: repeat(5, 1fr) 0.3fr;
   gap: 0.5rem;
   width: 95%;
   margin: 0.5rem auto;
 }
 
-@media (max-width: 414px) {
+@media (max-width: 768px) {
   .gridDisplayDiv {
-    grid-template-columns: repeat(3, 1fr);
+    /* Mobile columns: 6 equal columns (5 content + 1 action) */
+    grid-template-columns: repeat(6, 1fr);
     width: 100%;
+    /* MAX SPACE CHANGE 4: Reduce grid gaps to minimum */
+    gap: 0.2rem; 
+    /* MAX SPACE CHANGE 5: Remove margin around the grid */
+    margin: 0; 
   }
 }

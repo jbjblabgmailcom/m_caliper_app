@@ -1,57 +1,134 @@
+
 .container {
-  padding-top: 130px;
-  min-height: 100vh;
-  background-color: #ffffff;
-  background-image: url("/bg.png");
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    display: flex;
+    justify-content: center;
+    padding: 40px 20px; /* Default desktop padding */
+    background-color: #f0f2f5; 
 }
 
 .card {
-  position: relative;
-  background-color: white;
- 
-  padding: 2rem;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  text-align: center;
-  width: 100%;
-  max-width: 700px;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 40px; /* Default desktop padding */
+    max-width: 1200px;
+    width: 100%;
 }
 
-.abouttitle {
-  font-size: 2rem;
-  font-weight: bold;
-  margin-bottom: 1rem;
+.mainTitle {
+    color: #007bff; 
+    border-bottom: 3px solid #007bff;
+    padding-bottom: 10px;
+    margin-bottom: 30px;
+    font-size: 2em; /* Default desktop font size */
+    text-align: center;
 }
 
-.aboutintro,
-.aboutconnection,
-.aboutcompatibility,
-.aboutcloud,
-.aboutpricing {
-  font-size: 1rem;
-  line-height: 1.6;
-  margin-bottom: 1rem;
+.manualContent {
+    line-height: 1.6;
+    color: #333;
 }
 
-.sectiontitle {
-  font-size: 1.25rem;
-  font-weight: 600;
-  margin-top: 2rem;
-  margin-bottom: 0.5rem;
+/* ... (other selectors like fancyIntro, tocContainer, tocTitle, etc. remain unchanged as they generally scale well) ... */
+
+.sectionTitle {
+    color: #007bff;
+    margin-top: 30px;
+    margin-bottom: 15px;
+    font-size: 1.6em; /* Default desktop font size */
 }
 
-.featureslist {
-  list-style-type: disc;
-  padding-left: 1.5rem;
-  margin-bottom: 1.5rem;
+.subSectionTitle {
+    color: #333;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    font-size: 1.2em; /* Default desktop font size */
+    font-weight: 600;
 }
 
-.featureslist li {
-  margin-bottom: 0.5rem;
+.programslist_page_pic {
+    /* Set a reasonable maximum width for desktop images */
+    max-width: 70%; 
+    height: auto;
+    display: block; /* Ensure it behaves as a block element */
+    margin: 0 auto 20px auto; /* Center the image on desktop */
+}
+
+.movie {
+    max-width: 100%;
+    width: 100%; 
+    height: auto; 
+    min-height: 300px; /* Desktop minimum height */
+    display: block;
+    margin: 0 auto; /* Center the video */
+}
+
+.manualTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+    margin-bottom: 20px;
+    /* Allow the table to scroll horizontally on small screens (mobile fix) */
+    display: block; 
+    overflow-x: auto;
+}
+
+.manualTable th, .manualTable td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: left;
+    white-space: nowrap; /* Prevent column content from wrapping on desktop if possible */
+}
+
+@media (max-width: 768px) {
+    
+    /* Container & Card adjustments for mobile */
+    .container {
+        padding-top: 220px; /* Reduce main container padding on mobile */
+    }
+
+    .card {
+        padding: 20px 15px; /* Reduce card padding for a less cluttered look */
+        border-radius: 0; /* Optional: Remove border-radius on the edges for a full-bleed mobile feel */
+        box-shadow: none; /* Optional: Remove box-shadow on mobile */
+    }
+
+    /* Font size adjustments for mobile readability */
+    .mainTitle {
+        font-size: 1.6em;
+        margin-bottom: 20px;
+    }
+
+    .sectionTitle {
+        font-size: 1.3em;
+        margin-top: 20px;
+    }
+
+    .subSectionTitle {
+        font-size: 1.1em;
+    }
+
+    /* Image adjustments for mobile */
+    .programslist_page_pic {
+        width: 100%; /* Make images full width on mobile */
+        max-width: 100%;
+        margin-bottom: 15px;
+    }
+
+    /* Video adjustment for mobile */
+    .movie {
+        min-height: 200px; /* Reduce minimum height on mobile */
+    }
+    
+    /* Table adjustment for mobile */
+    .manualTable {
+        /* This ensures the table can be scrolled horizontally if its content overflows the screen */
+        -webkit-overflow-scrolling: touch; /* Improved scrolling for iOS */
+        /* width: auto; (Optional, but display:block/overflow-x:auto is the key fix) */
+    }
+    
+    .manualTable th, .manualTable td {
+        padding: 8px; /* Reduce padding in table cells for smaller screens */
+        font-size: 0.9em; /* Slightly smaller font for table content */
+    }
 }

@@ -1,76 +1,100 @@
-
-
-
 .wrappercontainer {
-  display: flexbox;
-  align-items:flex-start;
+  /* Corrected syntax: should be 'flex' */
+  display: flex; 
   /* Ensures it takes full available width */
   width: 100%;
-  min-height: 100vh; /* Make sure it takes at least the full viewport height */
+  min-height: 100vh; 
+  /* Default: stack content vertically below topside or align them */
+  flex-direction: column; 
+  /* Aligns content (if flex-direction: column) or items (if flex-direction: row) */
+  align-items: center; 
 }
 
 .topside {
-  display: flex; /* Makes direct children (image div and button container) flex items */
-  
-  align-items:center; /* Vertically aligns items in the cross-axis (center in this case) */
-  gap: 1.5rem; /* Adds space between the image div and the button container */
-  padding: 1rem;
+  display: flex; 
+  /* Default desktop layout: image and buttons side-by-side */
+  flex-direction: row; 
+  align-items: center; 
+  gap: 1rem; 
+  padding: 1rem 2rem; /* Added horizontal padding */
+  width: 100%; /* Ensure topside spans the container */
+  justify-content:flex-start; /* Optional: push image/logo to one side and buttons to the other */
+}
 
+.imageContainer {
+   
+    flex-shrink: 0; /* Prevent the image container from shrinking */
+}
+
+.logo {
+    /* Assuming this is the image element itself */
+    width: 250px; /* Default desktop size */
+    height: auto;
 }
 
 .buttonContainer {
   display: flex;
-  flex-direction: row; /* Stacks the buttons vertically */
-  gap: 10px; /* Adds space betrefixer: ween the stacked buttons */
-  /* Adjust alignment within the column if needed, e.g., align-items: flex-start; */
+  flex-direction: row; /* Default desktop: buttons side-by-side */
+  gap: 10px; 
+  align-items: center;
 }
 
 .content {
-  background-color: var(--background); /* Use theme variable */
-  padding-top: 0rem; /* Responsive padding */
+  background-color: var(--background); 
+  padding-top: 1rem; 
   padding-left: 2rem;
-  
+  padding-right: 2rem;
+  width: 100%; /* Ensure content section takes full width */
 }
-
-/* Media query for smaller screens (e.g., mobile) */
-@media (max-width: 414px) {
-  .topside {
-    flex-direction: row; /* Stack image and button container vertically on very small screens */
-    align-items:center; /* Align to the left when stacked */
-    padding: 1rem;
-    gap: 1rem; /* Adjust gap for stacked items */
-    width: 200%;
-  }
-
-  .buttonContainer {
-    flex-direction: column; /* Stack buttons vertically on small screens */
-    width: 100%; /* Make buttons fill available width */
-    align-items:stretch; /* Make buttons fill available width */
-
-  }
-
-  
-  .logo {
-    width: 100px;
-    height: 100px;
-  }
-}
-
-/* Print media query - unchanged as it's already specific */
-@media print {
-  .topside {
-    display: none !important;
-  }
-}
-
-
-
 
 .loginControler {
   position: absolute;
   top: -1rem;
   right: -1rem;
-  
-
 }
 
+
+@media (max-width: 768px) {
+    
+  .topside {
+    /* Change to column layout to stack image and buttons vertically */
+    flex-direction: column; 
+    align-items: flex-start; /* Align all items to the start (left) */
+    padding: 1rem 1rem; /* Reduce horizontal padding */
+    gap: 0.5rem; 
+    /* **CRITICAL FIX**: Removed the incorrect width: 200% */
+    width: 100%; 
+    justify-content: flex-start;
+  }
+    
+  .logo {
+    width: 80px; /* Smaller logo on mobile */
+    height: auto;
+  }
+
+  .buttonContainer {
+    /* Stack buttons vertically on small screens */
+    flex-direction: column; 
+    width: 100%; /* Buttons fill the width under the logo */
+    align-items: stretch; /* Make buttons fill available width */
+  }
+    
+  .content {
+      /* Reduce content padding on mobile */
+      padding-left: 1rem;
+      padding-right: 1rem;
+  }
+
+  .loginControler {
+      /* Adjust login controller position for better visibility on small screens */
+      top: 0.5rem;
+      right: 0.5rem;
+  }
+}
+
+/* Print media query - unchanged */
+@media print {
+  .topside {
+    display: none !important;
+  }
+}

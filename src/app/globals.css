@@ -50,12 +50,13 @@ a {
 .errorcontainer,
 .successcontainer {
   padding: 0rem; /* Use rem for responsive padding */
-  margin: 0.5rem auto; /* Centers the block horizontally, adds vertical margin */
+  margin: 1.5rem; /* Centers the block horizontally, adds vertical margin */
   border: 1px solid; /* Border color will be set by specific classes */
   border-radius: 0.5rem; /* Rounded corners */
   font-weight: bold;
   text-align: center;
   max-width: 90%;
+  width: clamp(300px, 90vw, 800px);
 
 }
 
@@ -74,7 +75,7 @@ a {
 }
 
 /* Media query for very small screens if specific adjustments are needed, though clamp() handles much */
-@media (max-width: 360px) {
+@media (max-width: 768px) {
   .errorcontainer,
   .successcontainer {
     padding: 0.8rem; /* Slightly less padding on very small screens */

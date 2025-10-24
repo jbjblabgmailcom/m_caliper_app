@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack",
+    "dev": "next dev --turbopack & npx next-video sync -w",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
@@ -11,8 +11,11 @@
   "dependencies": {
     "@neondatabase/serverless": "^1.0.0",
     "better-sqlite3": "^11.8.1",
+    "exceljs": "^4.4.0",
+    "file-saver": "^2.0.5",
     "next": "^15.3.2",
     "next-auth": "^4.24.11",
+    "next-video": "^2.4.0",
     "node": "^20.19.4",
     "pg": "^8.16.0",
     "react": "^19.0.0",

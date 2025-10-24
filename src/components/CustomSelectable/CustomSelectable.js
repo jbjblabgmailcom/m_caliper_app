@@ -1,16 +1,32 @@
 import classes from './page.module.css';
 
-export default function CustomSelectable({...props}) {
+export default function CustomSelectable({displayData, ...props}) {
+    
+  
+    if(displayData != null) {
 
-    return(
+        return <div className={classes.displayBox} {...props}>
+        {displayData === "distance" && <p>Dist</p>}
+        {displayData === "diameter" && <p>⌀</p>}
+        {displayData === "angle" && <p>∡</p>}
+        {displayData === "posx" && <p>x</p>}
+        {displayData === "posy" && <p>y</p>}
+        {displayData === "posz" && <p>z</p>}
+        {displayData === "pos" && <p>⌖</p>}
+    </div>
+    } else {
+        return(
         <select className={props.className || classes.customselectable} {...props}>
-            <option value="odleglosc" defaultValue>Odleg</option>
-            <option value="srednica" >⌀</option>
-            <option value="kat">∡</option>
-            <option value="pozx">x</option>
-            <option value="pozy">y</option>
-            <option value="pozz">z</option>
-            <option value="poz">⌖</option>
+            <option value="distance" defaultValue>Distance</option>
+            <option value="diameter" >⌀</option>
+            <option value="angle">∡</option>
+            <option value="posx">x</option>
+            <option value="posy">y</option>
+            <option value="posz">z</option>
+            <option value="pos">⌖</option>
         </select>
     );
+    }
+
+    
 }
