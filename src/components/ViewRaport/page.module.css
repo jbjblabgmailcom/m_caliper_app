@@ -103,5 +103,12 @@
   .printable {
     display: block !important;
   }
+  .nonprintable {
+    display: none;
+  }
+}
+
+.exportanddeletewrapper {
+  max-width: clamp(300px, 100vw, 800px);
 }
 

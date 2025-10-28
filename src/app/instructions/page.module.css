@@ -116,9 +116,21 @@
     }
 
     /* Video adjustment for mobile */
-    .movie {
-        min-height: 200px; /* Reduce minimum height on mobile */
-    }
+.movie {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: 1rem 0;
+  box-sizing: border-box;
+}
+
+
+.movie img,
+.movie video {
+    width: 100%;
+    height: auto;
+    display: block;
+}
     
     /* Table adjustment for mobile */
     .manualTable {

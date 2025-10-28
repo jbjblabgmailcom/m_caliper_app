@@ -4,6 +4,8 @@ import React from 'react';
 import classes from './page.module.css';
 import { useSession } from 'next-auth/react';
 import Link from 'next/link';
+import CustomSelectable from '../CustomSelectable/CustomSelectable.js';
+import ExportAndDelete from '../ExportAndDelete/ExportAndDelete.js';
 
  
 
@@ -56,7 +58,7 @@ export default function ViewRaport({pomiarId, progId, progName, pomiarCode, pomi
                     {Object.entries(pomiar).map(([key, {balon, feature, nominal, rzeczPomiar, upper, lower}]) =>(
                         <tr key={key}>
                         <td>{balon}</td>
-                        <td>{feature}</td>
+                        <td><CustomSelectable displayData={feature === undefined ? "No features to display" : feature} displayclass={"report"}/></td>
                         <td>{nominal}</td>
                         
                         {feature === "pos" ? 
@@ -98,7 +100,14 @@ export default function ViewRaport({pomiarId, progId, progName, pomiarCode, pomi
             </>
          )
          }
+         
+         <div className={classes.nonprintable}>
+        <div className={classes.exportanddeletewrapper}>
+            <ExportAndDelete id={pomiarId} redirTo="/reports" exp={true} deleteFromTable={"pomiary"} deleteMessage="Delete this report"/>
+            </div>    
         
+        
+        </div>
         </>
                
      

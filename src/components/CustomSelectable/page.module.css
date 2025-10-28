@@ -25,7 +25,29 @@
 /* Small screens */
 @media (max-width: 414px) {
   .displayBox {
-    min-height: 2.5rem;
+    min-height: 2rem;
+    height: clamp(2.5rem, 4vh, 3rem);
+    font-size: clamp(0.95rem, 0.95rem + 0.4vw, 1.25rem);
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    margin: 0.2rem auto;
+    padding: 0.3rem 0.6rem;
+    box-shadow: none; /* keep it lighter on mobile */
+  }
+}
+
+
+.displayBoxForReport {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #111827; /* modern dark gray */
+ }
+
+
+/* Small screens */
+@media (max-width: 414px) {
+  .displayBoxForReport {
+    min-height: 2rem;
     height: clamp(2.5rem, 4vh, 3rem);
     font-size: clamp(0.95rem, 0.95rem + 0.4vw, 1.25rem);
     border: 1px solid rgba(0, 0, 0, 0.15);

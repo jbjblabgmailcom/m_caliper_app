@@ -102,3 +102,25 @@ const pool = new Pool({
       
       return result.rows[0];
     }
+
+    export async function deleteFromDB(id, deleteFromTable) {
+      let query;
+      if(deleteFromTable === "pomiary") {
+        query = `
+        DELETE
+        FROM pomiary WHERE pomiarid = $1
+        RETURNING pomiarid;
+      `;
+      } else if (deleteFromTable === "programypomiarowe") {
+        query = `
+        DELETE
+        FROM programypomiarowe WHERE programid = $1
+        RETURNING programid;
+      `;
+      }
+
+      
+      const result = await pool.query(query, [id]);
+      
+      return result.rows[0];
+    }

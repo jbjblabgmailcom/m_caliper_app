@@ -1,6 +1,6 @@
 'use server';
 
-import { fetchProgramsFromDB, fetchDaneProgramuFromDB, saveProgramInDB, savePomiarInDB, fetchDaneRaportuFromDB, fetchAllReportsFromDB, fetchUserDataFromDB } from './db_actions.js'
+import { fetchProgramsFromDB, fetchDaneProgramuFromDB, saveProgramInDB, savePomiarInDB, fetchDaneRaportuFromDB, fetchAllReportsFromDB, fetchUserDataFromDB, deleteFromDB } from './db_actions.js'
 
 export async function fetchProgramsList(owner_email, limiter) {
     let programsList;
@@ -104,6 +104,31 @@ export async function fetchUserData(owner_email) {
 
     } catch (error) {
         console.error("Error fetching this users data ", error);
+        throw error;
+    }
+
+    
+
+}
+
+
+export async function deleteAction(id, deleteFromTable) {
+    
+    try {
+       const deletedId = await deleteFromDB(id, deleteFromTable);
+       console.log("deletedId", deletedId);
+       let tempId = 0;
+       if (deleteFromTable === "pomiary") {
+        tempId = deletedId.pomiarid;
+       } else if (deleteFromTable === "programypomiarowe") {
+        tempId = deletedId.programid;
+       }
+       return { success: true,
+                id: tempId,
+                }
+
+    } catch (error) {
+        console.error("Error deleting measurement report", error);
         throw error;
     }
 

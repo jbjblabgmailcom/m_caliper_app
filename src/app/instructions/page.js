@@ -82,8 +82,10 @@ export default function UserManual() {
 
         {/* Filtering Section */}
         <h3 className={classes.sectionTitle} id="section3">3. The Program Filtering Feature: Precision Search 🔍</h3>
+        <div className={classes.movie}>
+          <Video src={filteringPrograms} />
+        </div>
         
-        <Video src={filteringPrograms} className={classes.movie}/>
            
         
         <p>Finding the exact program you need among a large list is effortless with the Precision Search filtering bar.</p>
@@ -96,7 +98,10 @@ export default function UserManual() {
 
         {/* Creating Program Section */}
         <h3 className={classes.sectionTitle} id="section4">4. Creating & Defining Programs</h3>
-        <Video src={createNewProgram} className={classes.movie}/>
+        <div className={classes.movie}>
+            <Video src={createNewProgram} />
+        </div>
+        
         <p>Start a new program by clicking the <strong>New program </strong>button.</p>
 
         <h4 className={classes.subSectionTitle}>Defining Measurement Lines (New Program Form)</h4>
@@ -130,7 +135,9 @@ export default function UserManual() {
 
         {/* Editing Program Section */}
         <h3 className={classes.sectionTitle} id="section5">5. Editing an Existing Program</h3>
-        <Video src={editingProgram} className={classes.movie}/>
+        <div className={classes.movie}>
+        <Video src={editingProgram} />
+        </div>
         <p>The app allows for effortless modification. Clicking the Edit Program icon takes you to the same robust creation interface.</p>
         
         <h4 className={classes.subSectionTitle}>Accessing the Edit Screen & Versioning Policy</h4>
@@ -152,7 +159,9 @@ export default function UserManual() {
 
         {/* Running Program Section */}
         <h3 className={classes.sectionTitle} id="section6">6. Running a Measurement Program</h3>
-        <Video src={playProgram} className={classes.movie}/>
+        <div className={classes.movie}>
+        <Video src={playProgram} />
+        </div>
        
         <p>Both the <Image src={playIcon} width={40} height={40} alt="Play program icon" /> icon from the list and the Measure now button take you to the Measurement/Run Screen.</p>
         
@@ -189,7 +198,9 @@ export default function UserManual() {
         </p>
         {/* Running smart match feature */}
         <h3 className={classes.sectionTitle} id="section6_1">6.1. Smart Result Match (Auto-Fill Feature)</h3>
-        <Video src={smartProgram} className={classes.movie}/>
+        <div className={classes.movie}>
+        <Video src={smartProgram}/>
+        </div>
        
         <p>The Smart result match feature is designed to automate the data entry process when measurements are taken sequentially, or in environments where the physical measurement order might be slightly irregular.</p>
         

@@ -1,11 +1,10 @@
 import classes from './page.module.css';
 
 export default function CustomSelectable({displayData, ...props}) {
-    
-  
-    if(displayData != null) {
-
-        return <div className={classes.displayBox} {...props}>
+   
+    if(displayData) {
+        
+        return <div className={props.displayclass === "report" ? classes.displayBoxForReport : classes.displayBox}>
         {displayData === "distance" && <p>Dist</p>}
         {displayData === "diameter" && <p>⌀</p>}
         {displayData === "angle" && <p>∡</p>}
@@ -14,7 +13,7 @@ export default function CustomSelectable({displayData, ...props}) {
         {displayData === "posz" && <p>z</p>}
         {displayData === "pos" && <p>⌖</p>}
     </div>
-    } else {
+        } else  {
         return(
         <select className={props.className || classes.customselectable} {...props}>
             <option value="distance" defaultValue>Distance</option>
@@ -29,4 +28,4 @@ export default function CustomSelectable({displayData, ...props}) {
     }
 
     
-}
+} 

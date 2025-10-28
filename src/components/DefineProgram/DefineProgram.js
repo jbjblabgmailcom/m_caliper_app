@@ -7,6 +7,8 @@ import CustomInput from '../CustomInput/CustomInput';
 import CustomSelectable from '../CustomSelectable/CustomSelectable';
 import { saveProgram } from '@/db/db_server_side';
 import { useSession } from 'next-auth/react';
+import ExportAndDelete from '../ExportAndDelete/ExportAndDelete';
+
  
 
 export default function DefineProgram({progId, progName, progCode, progDate, progTime, owner_email}) {
@@ -17,6 +19,7 @@ export default function DefineProgram({progId, progName, progCode, progDate, pro
     const [codeState, setCodeState] = useState(JSON.parse(progCode));
     const [randProgName, setrandProgName] = useState("");
     const [dbResult, setdbResult] = useState({});
+    const [showSuccess, setShowSuccess] = useState(false);
     const { data: session } = useSession();
     
     const unset = 0;
@@ -26,6 +29,19 @@ export default function DefineProgram({progId, progName, progCode, progDate, pro
         setrandProgName("program" + Math.floor(10000 + Math.random() * 90000));
     },[]);
     
+    useEffect(()=> {
+           
+                setShowSuccess(true);
+            const timer = setTimeout(() => {
+                setShowSuccess(false);
+                clearTimeout(timer);
+
+              }, 5000);
+           
+      
+    },[dbResult.success]);
+
+
 
     function addNewLine() {
         setCodeState(prev => {
@@ -69,17 +85,16 @@ export default function DefineProgram({progId, progName, progCode, progDate, pro
  
 
     const handleSave = async () => {
-    
+    setdbResult({});
     const programDate = new Date().toLocaleDateString();
     const programTime = new Date().toLocaleTimeString();
     const progNameInput = document.getElementById('progNameInput');
     const programNameFromInput = progNameInput ? progNameInput.value : "";
-    console.log("KODE STATE", codeState);
+  
     const saveResult = await saveProgram(programNameFromInput, codeState, programDate, programTime, session.user.email);
     setdbResult(saveResult);
-      
-    
 
+  
     }
 
 const handleOnChange = (index, name, value) => {
@@ -206,9 +221,9 @@ const handleOnChange = (index, name, value) => {
                 <div><label>Bal </label></div>
                 <div><label>Feature</label></div>
                 <div><label>Nominal </label></div>
-                <div><label>Upper.tol. </label></div>
-                <div><label>Lower.tol. </label></div>
-                <div><label>Delete. </label></div>
+                <div><label>Upp.tol </label></div>
+                <div><label>Low.tol </label></div>
+                <div><label>Del </label></div>
 
             {
                
@@ -294,7 +309,7 @@ const handleOnChange = (index, name, value) => {
                 <ProgramButton onClick={handleSave}>Save program</ProgramButton>
                 {dbResult.success && <ProgramButton onClick={() => window.location.href = `/play/${dbResult.id}`}>Measure now</ProgramButton>} 
             </div>
-            {dbResult.success && <div className="successcontainer">Program saved succesfully.</div>}
+            {showSuccess && dbResult.success && <div className="successcontainer">Program saved succesfully.</div>}
             
         </div>
         </>) : (
@@ -303,6 +318,11 @@ const handleOnChange = (index, name, value) => {
         </>)
 
         }
+        <div className={classes.exportanddeletewrapper}>
+            {progId != undefined && <ExportAndDelete id={progId} redirTo="/" deleteFromTable={"programypomiarowe"} deleteMessage="Delete this program"/>} 
+            
+        </div>
+        
         </>
         
     );

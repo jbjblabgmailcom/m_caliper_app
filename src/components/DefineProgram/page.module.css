@@ -121,7 +121,7 @@
   grid-template-columns: repeat(5, 1fr) 0.3fr;
   gap: 0.5rem;
   width: 95%;
-  margin: 0.5rem auto;
+  
 }
 
 @media (max-width: 768px) {
@@ -134,4 +134,8 @@
     /* MAX SPACE CHANGE 5: Remove margin around the grid */
     margin: 0; 
   }
+}
+
+.exportanddeletewrapper {
+  max-width: clamp(300px, 100vw, 750px);
 }

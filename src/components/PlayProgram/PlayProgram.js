@@ -22,7 +22,9 @@ export default function PlayProgram({progId, progName, progCode, progDate, progT
     const prevRef = useRef([]);
     const [cBox, setcBox] = useState(false);
     const [dbResult, setdbResult] = useState({});
+    const [showSuccess, setShowSuccess] = useState(false);
     const [multiplier, setMultiplier] = useState('2');
+    const [randProgName, setrandProgName] = useState("");
     const unset = 0;
     const debounceTimeout = useRef(null);
     const progDate2 = progDate.toLocaleDateString();
@@ -34,6 +36,10 @@ export default function PlayProgram({progId, progName, progCode, progDate, progT
                 
     
                 //useEffect block
+
+                useEffect(()=> {
+                        setrandProgName("program" + Math.floor(10000 + Math.random() * 90000));
+                    },[]);
 
                 useEffect(()=> {
                 if(cBox) {
@@ -73,6 +79,21 @@ export default function PlayProgram({progId, progName, progCode, progDate, progT
 
                 prevRef.current = rzeczyInput; // update reference
                 }, [rzeczyInput]);
+
+
+                    
+                    
+                    useEffect(()=> {
+                           
+                        setShowSuccess(true);
+                        const timer = setTimeout(() => {
+                            setShowSuccess(false);
+                            clearTimeout(timer);
+                
+                            }, 5000);
+                           
+                      
+                    },[dbResult.success]);
 
 
     
@@ -115,7 +136,7 @@ export default function PlayProgram({progId, progName, progCode, progDate, progT
         }
         
     const handleSave = async () => {
-
+        setdbResult({});
         const pomiarCode = {};
         const pomiarDate = new Date().toLocaleDateString();
         const pomiarTime = new Date().toLocaleTimeString();
@@ -405,7 +426,7 @@ function handleRzeczyChange(val, index) {
                     : null}
             
             </div>
-             {dbResult.success && <div className="successcontainer">Measurment result has been saved.</div>}
+             {dbResult.success && showSuccess && <div className="successcontainer">Measurment result has been saved.New report created at no. {dbResult.id}</div>}
             {dbResult.error && <div className="errorcontainer">Saving error {dbResult.error}</div>}   
             
         </div>
