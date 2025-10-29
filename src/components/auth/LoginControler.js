@@ -40,17 +40,17 @@ export default function LoginControler() {
           />
          
           <div className="avatarmenu">
-          
             <div className="menuitem">User: {session.user.email}</div>
-            <div className="menuitem">Your plan: {usrData?.subscription_plan === process.env.NEXT_PUBLIC_PRICE_YEAR
-    ? 'PREMIUM YEARLY'
-    : usrData?.subscription_plan === process.env.NEXT_PUBLIC_PRICE_MONTH
-    ? 'PREMIUM MONTHLY'
-    : 'FREE'}</div>
-            
             <div className="menuitem">
             <span className="logout" onClick={() => signOut()}>Logout</span>
             </div>
+
+
+            <div className="separator"></div>
+            <div className="menuitem"><Link className="link" href="/">My programs</Link></div>
+            <div className="menuitem"><Link className="link" href="/program">New program</Link></div>
+            <div className="menuitem"><Link className="link" href="/reports">Reports</Link></div>
+                        
             <div className="separator"></div>
             <div className="menuitem"><Link className="link" href="/panel">Manage account.</Link></div>
             <div className="menuitem"><Link className="link" href="/home">Home</Link></div>

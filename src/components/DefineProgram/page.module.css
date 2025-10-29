@@ -72,6 +72,30 @@
   }
 }
 
+.toleranceButtonsBlock {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  flex-wrap: wrap; /* keeps row layout even if space gets tight */
+}
+
+/* all buttons inside */
+.toleranceButtonsBlock button {
+  flex: 1;
+  min-width: 80px;
+  max-width: 200px;
+}
+
+/* mobile: buttons still in row, but whole block fills 80% of screen width */
+@media (max-width: 768px) {
+  .toleranceButtonsBlock {
+    width: 80vw;
+   
+  }
+}
+
+
 /* Input field */
 .valinput {
   padding: 0.5rem 0.75rem;

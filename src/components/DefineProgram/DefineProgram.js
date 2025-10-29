@@ -22,6 +22,7 @@ export default function DefineProgram({progId, progName, progCode, progDate, pro
     const [showSuccess, setShowSuccess] = useState(false);
     const { data: session } = useSession();
     
+    
     const unset = 0;
     const unsetul = '';
 
@@ -192,6 +193,8 @@ const handleOnChange = (index, name, value) => {
             return 0; // Fallback if no range matches (shouldn't be reached if ranges are comprehensive)
 }
 
+    
+
     return (
         <>
         {owner_email === session.user.email || owner_email === undefined ? 
@@ -199,15 +202,17 @@ const handleOnChange = (index, name, value) => {
         <>
         <div className={classes.defineProgramWrapper}>
                 <div>
+                    
                     <p>
                         Program name: {progName || randProgName}, Date: {progDate}, Time: {progTime}
                     </p>
                     <CustomInput defaultValue={progName || randProgName} id="progNameInput" required />
                 </div>
-                <div>
-                    <p>
+                <p>
                         General tolerance:
                     </p>
+                <div className={classes.toleranceButtonsBlock}>
+                    
               
                 {["2768-f", "2768-m", "2768-c"].map((option) => (
                    <ProgramButton

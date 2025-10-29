@@ -78,6 +78,12 @@
     width: 100%; /* Buttons fill the width under the logo */
     align-items: stretch; /* Make buttons fill available width */
   }
+
+  @media (max-width: 768px) {
+  .buttonContainer {
+    display: none;
+  }
+}
     
   .content {
       /* Reduce content padding on mobile */

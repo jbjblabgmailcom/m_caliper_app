@@ -8,6 +8,7 @@ import DisplayBox from '../DisplayBox/DisplayBox';
 import DisplayInput from '../DisplayInput/DisplayInput';
 import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
+import ModeMenu from './ModeMenu';
 
 import CustomSelectable from '../CustomSelectable/CustomSelectable';
  
@@ -20,34 +21,32 @@ export default function PlayProgram({progId, progName, progCode, progDate, progT
     const [codeState, setCodeState] = useState(JSON.parse(progCode));
     const [rzeczyInput, setRzeczyInput] = useState([]);
     const prevRef = useRef([]);
-    const [cBox, setcBox] = useState(false);
     const [dbResult, setdbResult] = useState({});
     const [showSuccess, setShowSuccess] = useState(false);
     const [multiplier, setMultiplier] = useState('2');
-    const [randProgName, setrandProgName] = useState("");
     const unset = 0;
     const debounceTimeout = useRef(null);
     const progDate2 = progDate.toLocaleDateString();
     const router = useRouter();
     const inputRefs = useRef([]); // store all refs here
     const tempInputRef = useRef(null);
+    const [mode, setMode] = useState('normal');
 
     
-                
+         function handleSelectMode(modename) {
+            setMode(modename);
+         }       
     
                 //useEffect block
 
-                useEffect(()=> {
-                        setrandProgName("program" + Math.floor(10000 + Math.random() * 90000));
-                    },[]);
 
                 useEffect(()=> {
-                if(cBox) {
+                if(mode === 'smatch') {
                     const tempInput = tempInputRef;
                     tempInput.current.focus();
                     
                 }
-                },[cBox]);
+                },[mode]);
     
                 useEffect(()=> {
                     
@@ -96,10 +95,7 @@ export default function PlayProgram({progId, progName, progCode, progDate, progT
                     },[dbResult.success]);
 
 
-    
-    function handleCheckboxChange(event) {
-        setcBox(event.target.checked);
-        }
+  
 
     
 
@@ -182,13 +178,22 @@ export default function PlayProgram({progId, progName, progCode, progDate, progT
 
 function handleRzeczyChange(val, index) {
         
-      if(cBox) {
+      if(mode === 'smatch') {
         clearTimeout(debounceTimeout.current);
         debounceTimeout.current = setTimeout(()=>{
             let rzeczy = Number(val.replace(",", "."));
             const tempInput = tempInputRef;
             const newIndex = findIndex(rzeczy);
-            console.log("New index", newIndex);
+
+            const filledInput = inputRefs.current[newIndex];
+            if (filledInput) {
+                filledInput.scrollIntoView({
+                behavior: 'smooth',
+                block: 'center', // centers vertically
+                });
+}
+            console.log("Input to be filled", newIndex);
+
             if(newIndex === -1) {
                 tempInput.current.value = "";
                     tempInput.current.focus();
@@ -228,7 +233,7 @@ function handleRzeczyChange(val, index) {
 
         }, 1000);
     }
-        if(!cBox) {
+        if(mode === 'normal') {
             clearTimeout(debounceTimeout.current);
             debounceTimeout.current = setTimeout(()=>{
                 let rzeczy = "";
@@ -276,6 +281,46 @@ function handleRzeczyChange(val, index) {
             },1000);
       
         }
+        if(mode === 'manual') {
+            clearTimeout(debounceTimeout.current);
+            debounceTimeout.current = setTimeout(()=>{
+                let rzeczy = "";
+                if(val !== "") {
+                    rzeczy = Number(val.replace(",", "."));      
+                }
+                
+                setRzeczyInput(prev =>
+                    prev.map((item, i) =>
+                        i === index ? { ...item, key: rzeczy } : item
+                    )
+                    );
+            
+            const {nominal, upper, lower, feature} = codeState[index] || {};
+            const nom = Number(nominal);
+            const upp = Number(upper);
+            const low = Number(lower);
+            
+     
+                let newClass;
+
+                if (rzeczy === "") {
+                    newClass = classes.displayInputBlank;
+                } else if (feature === "pos") {
+                    newClass = (rzeczy >= 0 && rzeczy <= nom) ? classes.displayInputOK : classes.displayInputNotOK;
+                } else {
+                    newClass = (rzeczy >= nom + low && rzeczy <= nom + upp) ? classes.displayInputOK : classes.displayInputNotOK;
+                }
+
+                setDynamicClassName(prevState =>
+                    prevState.map((item, i) =>
+                        i === index ? { ...item, key: newClass } : item
+                    )
+                );
+                
+                
+            },1000);
+      
+        }
 
     }
   
@@ -297,7 +342,7 @@ function handleRzeczyChange(val, index) {
               <div>
                 <div>
                     <p>
-                       Created date: {progDate2}, Time: {progTime}
+                      Created date: {progDate2}, Time: {progTime}
                     </p>
                     
                 </div>
@@ -305,12 +350,10 @@ function handleRzeczyChange(val, index) {
                 <div className={classes.progNameBox}>
                         <DisplayBox displayData={"Program name: " + progName || undefined} id="progNameInput" required />
                 </div>
+                {mode === 'smatch' &&
                 <div className={classes.cBox}>
-                    <input type="checkbox"
-                    className={classes.checkbox} 
-                    onChange={handleCheckboxChange}
-                    />
-                    Smart result match. 
+                    
+                  
                     <span>
                     <select 
                     type="select"
@@ -323,7 +366,12 @@ function handleRzeczyChange(val, index) {
                         <option value="2">2x tol</option>
                         <option value="3">3x tol</option>
                     </select> Matching range.</span>
-                    {cBox &&
+                    {/* <input type="checkbox"
+                    className={classes.checkbox} 
+                    onChange={handleCheckboxChange}
+                    checked={mode==='smatch'}
+                    /> */}
+                    <div className={classes.checkbox} onClick={() => handleSelectMode("normal")}></div>
                    
                     <DisplayInput 
                     id="temp" 
@@ -336,9 +384,9 @@ function handleRzeczyChange(val, index) {
                                         
                     />
                     
-                    }
-                  {cBox && <span className={classes.blinkingText}>AUTO</span>}
-                </div>
+                   
+                  <span className={classes.blinkingText}>SmartMatch</span>
+                </div> }
               
             <div className={classes.gridDisplayDiv}>
                 <div><label>Bal.</label></div>
@@ -382,7 +430,7 @@ function handleRzeczyChange(val, index) {
                     onChange={(e) => handleRzeczyChange(e.target.value, index)}
                     dynstyle={dynamicClassName?.[index]?.key}
                     autoComplete="off"
-                    readOnly={cBox}
+                    readOnly={mode === 'smatch'}
                     ref={(el => (inputRefs.current[index] = el))}
                     
                     />
@@ -431,6 +479,10 @@ function handleRzeczyChange(val, index) {
             
         </div>
         <div className={classes.spacer}></div>
+        <div className={classes.modemenuwrapper}>
+                    <ModeMenu handleSelectMode={handleSelectMode} mode={mode} />
+        </div>
+        
               </>  
             ):
             (

@@ -1,0 +1,91 @@
+
+
+.actionpanel {
+    /* Layout and background */
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px;
+    background-color: #d6e6ff; /* Dark Slate Gray */
+    border-radius: 0.3rem;
+
+    color: rgb(0, 0, 0);
+    min-height: 50px;
+
+}
+
+/* Responsive adjustment for desktop/tablet (min-width: 640px) */
+@media (min-width: 640px) {
+    .actionpanel {
+        flex-direction: row;
+        column-gap: 32px; /* Space between items on desktop */
+    }
+}
+
+.actiongroup {
+    display: flex;
+    align-items: center;
+    margin-bottom: 16px; /* Spacing for mobile layout */
+}
+
+@media (min-width: 640px) {
+    .actiongroup {
+        margin-bottom: 0;
+    }
+}
+
+
+/* Export and Delete labels */
+.actionlabel {
+    font-size: 1.125rem; /* Large text */
+    font-weight: 600; /* Semi-bold */
+    letter-spacing: 0.05em; 
+    margin-right: 12px; /* Spacing before icon */
+}
+
+/* Shared style for icon containers (Excel and Trash) */
+.actionicon {
+    width: 40px; 
+    height: 40px; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform 0.15s ease-in-out;
+}
+
+.actionicon:hover {
+    transform: scale(1.1); /* Zoom effect on hover */
+}
+
+/* Confirmation buttons container */
+.decisiongroup {
+    display: flex;
+    gap: 12px; 
+    font-size: 1rem; 
+    font-weight: 500;
+    margin: auto;
+    align-items: center; 
+}
+
+/* Base style for both YES/NO buttons */
+.decisionbutton {
+    padding: 8px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.15s ease-in-out, transform 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    color: #ffffff;
+    font-weight: 900;
+    background-color: #6b9aff; /* Red-600 */
+}
+
+.selected {
+    background-color: #ff0000; /* Red-600 */
+}
+
+.decisionbutton:hover {
+    transform: scale(1.05); /* Slight lift on hover */
+}
+
