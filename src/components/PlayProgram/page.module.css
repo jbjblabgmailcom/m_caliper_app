@@ -69,10 +69,10 @@
 /* Mobile layout */
 @media (max-width: 768px) {
   .cBox {
-    position: fixed;
-   
-    left: 50%;
-    transform: translateX(-50%);
+  position: fixed;              /* stays in place even on scroll */
+  top: 70%;                     /* halfway down the viewport */
+  left: 50%;                    /* halfway across the viewport */
+  transform: translate(-50%, -50%);
     
     
    
