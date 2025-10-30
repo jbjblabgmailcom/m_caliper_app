@@ -29,7 +29,7 @@
 }
 
 /* Small screens */
-@media (max-width: 414px) {
+@media (max-width: 768px) {
   .displayInput {
     min-height: 2.5rem;
     height: clamp(2.5rem, 4vh, 3rem);

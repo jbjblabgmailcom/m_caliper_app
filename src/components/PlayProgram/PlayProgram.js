@@ -355,23 +355,22 @@ function handleRzeczyChange(val, index) {
                     
                   
                     <span>
+
                     <select 
                     type="select"
                     name="multiplier"
                     id="multiplier"
                     value={multiplier}
                     onChange={handleChangeMultiplier}
+                    className={classes.customSelect}
                     >
                         <option value="1">1x tol</option>
                         <option value="2">2x tol</option>
                         <option value="3">3x tol</option>
-                    </select> Matching range.</span>
-                    {/* <input type="checkbox"
-                    className={classes.checkbox} 
-                    onChange={handleCheckboxChange}
-                    checked={mode==='smatch'}
-                    /> */}
-                    <div className={classes.checkbox} onClick={() => handleSelectMode("normal")}></div>
+                    </select>
+                     matching range.
+                   
+                    <p className={classes.checkbox} onClick={() => handleSelectMode("normal")}></p>
                    
                     <DisplayInput 
                     id="temp" 
@@ -385,7 +384,7 @@ function handleRzeczyChange(val, index) {
                     />
                     
                    
-                  <span className={classes.blinkingText}>SmartMatch</span>
+                  </span>
                 </div> }
               
             <div className={classes.gridDisplayDiv}>
