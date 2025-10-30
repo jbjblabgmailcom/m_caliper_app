@@ -33,9 +33,13 @@ export default function PlayProgram({progId, progName, progCode, progDate, progT
     const [mode, setMode] = useState('normal');
     const modalRef = useRef(null);
 
-useEffect(() => {
+  useEffect(() => {
     const modal = modalRef.current;
     if (!modal || !window.visualViewport) return;
+
+    // 🔒 Prevent background scroll
+    const originalOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
 
     const reposition = () => {
       const v = window.visualViewport;
@@ -47,14 +51,14 @@ useEffect(() => {
 
     window.visualViewport.addEventListener('resize', reposition);
     window.visualViewport.addEventListener('scroll', reposition);
-    reposition(); // initial call
+    reposition();
 
     return () => {
+      document.body.style.overflow = originalOverflow;
       window.visualViewport.removeEventListener('resize', reposition);
       window.visualViewport.removeEventListener('scroll', reposition);
     };
   }, []);
-
     
          function handleSelectMode(modename) {
             setMode(modename);
