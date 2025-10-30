@@ -31,6 +31,29 @@ export default function PlayProgram({progId, progName, progCode, progDate, progT
     const inputRefs = useRef([]); // store all refs here
     const tempInputRef = useRef(null);
     const [mode, setMode] = useState('normal');
+    const modalRef = useRef(null);
+
+useEffect(() => {
+    const modal = modalRef.current;
+    if (!modal || !window.visualViewport) return;
+
+    const reposition = () => {
+      const v = window.visualViewport;
+      const top = (v.height / 2) + v.offsetTop;
+      const left = (v.width / 2) + v.offsetLeft;
+      modal.style.top = `${top}px`;
+      modal.style.left = `${left}px`;
+    };
+
+    window.visualViewport.addEventListener('resize', reposition);
+    window.visualViewport.addEventListener('scroll', reposition);
+    reposition(); // initial call
+
+    return () => {
+      window.visualViewport.removeEventListener('resize', reposition);
+      window.visualViewport.removeEventListener('scroll', reposition);
+    };
+  }, []);
 
     
          function handleSelectMode(modename) {
@@ -351,7 +374,7 @@ function handleRzeczyChange(val, index) {
                         <DisplayBox displayData={"Program name: " + progName || undefined} id="progNameInput" required />
                 </div>
                 {mode === 'smatch' &&
-                <div className={classes.cBox}>
+                <div className={classes.cBox} ref={modalRef}>
                     
                   
                     <span>
