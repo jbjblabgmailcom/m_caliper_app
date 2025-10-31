@@ -70,7 +70,7 @@
 @media (max-width: 768px) {
   .cBox {
   position: fixed;             
-    top: 80%;                     /* halfway down the viewport */
+    top: 20%;                     /* halfway down the viewport */
   left: 50%;                 
   transform: translate(-50%, -50%);
     
