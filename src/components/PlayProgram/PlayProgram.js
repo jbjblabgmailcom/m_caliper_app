@@ -33,32 +33,51 @@ export default function PlayProgram({progId, progName, progCode, progDate, progT
     const [mode, setMode] = useState('normal');
     const modalRef = useRef(null);
 
-  useEffect(() => {
-    const modal = modalRef.current;
-    if (!modal || !window.visualViewport) return;
+useEffect(() => {
+  const modal = modalRef.current;
+  if (!modal || !window.visualViewport) return;
 
-    // 🔒 Prevent background scroll
-    const originalOverflow = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
+  // 🔒 Prevent background scroll
+  const originalOverflow = document.body.style.overflow;
+  document.body.style.overflow = 'hidden';
 
-    const reposition = () => {
-      const v = window.visualViewport;
-      const top = (v.height / 2) + v.offsetTop;
-      const left = (v.width / 2) + v.offsetLeft;
-      modal.style.top = `${top}px`;
-      modal.style.left = `${left}px`;
-    };
+  let lastOffsetTop = window.visualViewport.offsetTop;
 
-    window.visualViewport.addEventListener('resize', reposition);
-    window.visualViewport.addEventListener('scroll', reposition);
-    reposition();
+  const reposition = () => {
+    const v = window.visualViewport;
+    const scrollDelta = v.offsetTop - lastOffsetTop; // how much viewport moved
+    lastOffsetTop = v.offsetTop;
 
-    return () => {
-      document.body.style.overflow = originalOverflow;
-      window.visualViewport.removeEventListener('resize', reposition);
-      window.visualViewport.removeEventListener('scroll', reposition);
-    };
-  }, []);
+    // Move modal in opposite direction of scroll/keyboard
+    const rect = modal.getBoundingClientRect();
+    const currentTop = rect.top + window.scrollY; 
+    const currentLeft = rect.left + window.scrollX;
+
+    modal.style.position = 'absolute';
+    modal.style.top = `${currentTop - scrollDelta}px`;
+    modal.style.left = `${currentLeft}px`;
+  };
+
+  // initial center
+  const centerModal = () => {
+    const v = window.visualViewport;
+    modal.style.position = 'absolute';
+    modal.style.top = `${v.height / 2 + v.offsetTop}px`;
+    modal.style.left = `${v.width / 2 + v.offsetLeft}px`;
+    lastOffsetTop = v.offsetTop;
+  };
+
+  centerModal();
+
+  window.visualViewport.addEventListener('resize', reposition);
+  window.visualViewport.addEventListener('scroll', reposition);
+
+  return () => {
+    document.body.style.overflow = originalOverflow;
+    window.visualViewport.removeEventListener('resize', reposition);
+    window.visualViewport.removeEventListener('scroll', reposition);
+  };
+}, []);
     
          function handleSelectMode(modename) {
             setMode(modename);
