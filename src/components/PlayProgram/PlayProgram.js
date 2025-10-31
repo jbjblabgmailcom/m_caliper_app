@@ -31,53 +31,29 @@ export default function PlayProgram({progId, progName, progCode, progDate, progT
     const inputRefs = useRef([]); // store all refs here
     const tempInputRef = useRef(null);
     const [mode, setMode] = useState('normal');
+
+
     const modalRef = useRef(null);
 
-useEffect(() => {
-  const modal = modalRef.current;
-  if (!modal || !window.visualViewport) return;
+      const scrollToInput = (input) => {
+    if (!modalRef.current || !input) return;
 
-  // 🔒 Prevent background scroll
-  const originalOverflow = document.body.style.overflow;
-  document.body.style.overflow = 'hidden';
+    // Scroll the input into view smoothly
+    input.scrollIntoView({ behavior: 'smooth', block: 'center' });
 
-  let lastOffsetTop = window.visualViewport.offsetTop;
+    // Update modal to follow input
+    const updateModal = () => {
+      const rect = input.getBoundingClientRect();
+      modalRef.current.style.position = 'absolute';
+      modalRef.current.style.top = `${rect.top + window.scrollY - 30}px`;
+      modalRef.current.style.left = `${rect.left + window.scrollX}px`;
+      modalRef.current.style.transform = 'translate(-50%, -50%)';
+    };
 
-  const reposition = () => {
-    const v = window.visualViewport;
-    const scrollDelta = v.offsetTop - lastOffsetTop; // how much viewport moved
-    lastOffsetTop = v.offsetTop;
-
-    // Move modal in opposite direction of scroll/keyboard
-    const rect = modal.getBoundingClientRect();
-    const currentTop = rect.top + window.scrollY; 
-    const currentLeft = rect.left + window.scrollX;
-
-    modal.style.position = 'absolute';
-    modal.style.top = `${currentTop - scrollDelta}px`;
-    modal.style.left = `${currentLeft}px`;
+    // Final update after scroll animation
+    setTimeout(updateModal, 100); // adjust to match smooth scroll duration
   };
 
-  // initial center
-  const centerModal = () => {
-    const v = window.visualViewport;
-    modal.style.position = 'absolute';
-    modal.style.top = `${v.height / 2 + v.offsetTop}px`;
-    modal.style.left = `${v.width / 2 + v.offsetLeft}px`;
-    lastOffsetTop = v.offsetTop;
-  };
-
-  centerModal();
-
-  window.visualViewport.addEventListener('resize', reposition);
-  window.visualViewport.addEventListener('scroll', reposition);
-
-  return () => {
-    document.body.style.overflow = originalOverflow;
-    window.visualViewport.removeEventListener('resize', reposition);
-    window.visualViewport.removeEventListener('scroll', reposition);
-  };
-}, []);
     
          function handleSelectMode(modename) {
             setMode(modename);
@@ -233,10 +209,7 @@ function handleRzeczyChange(val, index) {
 
             const filledInput = inputRefs.current[newIndex];
             if (filledInput) {
-                filledInput.scrollIntoView({
-                behavior: 'smooth',
-                block: 'center', // centers vertically
-                });
+                scrollToInput(filledInput);
 }
             console.log("Input to be filled", newIndex);
 

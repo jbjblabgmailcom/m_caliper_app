@@ -69,20 +69,15 @@
 /* Mobile layout */
 @media (max-width: 768px) {
   .cBox {
-  position: fixed;             
-    top: 20%;                     /* halfway down the viewport */
-  left: 50%;                 
-  transform: translate(-50%, -50%);
+    position: absolute;       /* controlled by JS */
+    bottom: 28px;                 /* vertical center */
+    left: 50%;                /* horizontal center */
+    transform: translate(-50%, -50%); 
     
-    
-   
-    width: 100%;
+    width: 90%;               /* or 100%, whatever you prefer */
     z-index: 9998;
     transition: top 0.2s ease, left 0.2s ease;
-    
   }
-
-
 }
 
 
